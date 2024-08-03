@@ -8,16 +8,9 @@ import {
 	CardContent,
 	CardFooter,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+
 import { Textarea } from "@/components/ui/textarea";
-import {
-	Select,
-	SelectTrigger,
-	SelectValue,
-	SelectContent,
-	SelectItem,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+
 import {
 	Form,
 	FormControl,
@@ -28,43 +21,64 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type {z} from 'zod';
+import type { z } from "zod";
 import { productSchema } from "@/schema";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { PlusIcon } from "lucide-react";
 import type { Database } from "@/supabase";
-import { createCategoryAction } from "@/utils/actions/categories";
-import { useFormState } from "react-dom";
-import { createMaterialAction } from "@/utils/actions/materials";
-import { useState } from "react";
 import CreateCategory from "./create-category";
 import CreateMaterial from "./create-material";
+import { SubmitButton } from "@/components/submit-button";
+import { useFormState } from "react-dom";
+import { createProductAction } from "@/utils/actions/products";
+import { Separator } from "@/components/ui/separator";
+import { useTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { Circle, CircleDashed } from "lucide-react";
 
 type Props = {
 	categories: Database["public"]["Tables"]["categories"]["Row"][];
 	materials: Database["public"]["Tables"]["materials"]["Row"][];
 };
 
+export default function CreateProduct({ categories, materials }: Props) {
+	const form = useForm<z.infer<typeof productSchema>>({
+		resolver: zodResolver(productSchema),
+		defaultValues: {
+			stock: 0,
+			categories: [],
+			materials: [],
+		},
+		mode: "onBlur",
+	});
 
-export default function CreateProduct({categories, materials}:Props) {
+	const [state, formAction] = useFormState(createProductAction, null);
+  const [pending, startTransition] = useTransition();
 
-const form = useForm<z.infer<typeof productSchema>>({
-  resolver: zodResolver(productSchema),
-  defaultValues: {
-    stock: 0,
-    categories: [],
-  }
-})
+	const handleSubmit = (data: z.infer<typeof productSchema>) => {
+		// console.log(data);
+		const formData = new FormData();
 
+		formData.append("title", data.title);
+		formData.append("description", data.description);
+		formData.append("stock", data.stock.toString());
+		formData.append("price", data.price.toString());
+		if (data.is_featured) {
+			formData.append("is_featured", "on");
+		}
+		for (const item of data.categories) {
+			formData.append("categories", item.toString());
+		}
 
-
-
-
+		for (const item of data.materials) {
+			formData.append("materials", item.toString());
+		}
+    startTransition(() => {
+      formAction(formData);
+    });
+	};
 
 	return (
 		<Card className="w-full max-w-4xl">
@@ -76,7 +90,10 @@ const form = useForm<z.infer<typeof productSchema>>({
 			</CardHeader>
 			<CardContent>
 				<Form {...form}>
-					<form className="grid gap-6">
+					<form
+						onSubmit={form.handleSubmit(handleSubmit)}
+						className="grid gap-6"
+					>
 						<div className="grid gap-2">
 							<FormField
 								control={form.control}
@@ -164,6 +181,7 @@ const form = useForm<z.infer<typeof productSchema>>({
 											</div>
 											<FormControl>
 												<Switch
+													name="is_featured"
 													checked={field.value}
 													onCheckedChange={field.onChange}
 													aria-readonly
@@ -206,6 +224,7 @@ const form = useForm<z.infer<typeof productSchema>>({
 																>
 																	<FormControl>
 																		<Checkbox
+																			name="categories"
 																			checked={field.value?.includes(item.id)}
 																			onCheckedChange={(checked) => {
 																				return checked
@@ -249,46 +268,49 @@ const form = useForm<z.infer<typeof productSchema>>({
 														Select relevant materials in your product.
 													</FormDescription>
 												</div>
-											  <CreateMaterial />
+												<CreateMaterial />
 											</div>
 
 											<div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-												{materials.map((item) => (
-													<FormField
-														key={item.id}
-														control={form.control}
-														name="materials"
-														render={({ field }) => {
-															return (
-																<FormItem
-																	key={item.id}
-																	className="flex flex-row items-start space-x-3 space-y-0"
-																>
-																	<FormControl>
-																		<Checkbox
-																			checked={field.value?.includes(item.id)}
-																			onCheckedChange={(checked) => {
-																				return checked
-																					? field.onChange([
-																							...field.value,
-																							item.id,
-																						])
-																					: field.onChange(
-																							field.value?.filter(
-																								(value) => value !== item.id,
-																							),
-																						);
-																			}}
-																		/>
-																	</FormControl>
-																	<FormLabel className="font-normal">
-																		{item.name}
-																	</FormLabel>
-																</FormItem>
-															);
-														}}
-													/>
-												))}
+												{materials.map((item) => {
+													return (
+														<FormField
+															key={item.id}
+															control={form.control}
+															name="materials"
+															render={({ field }) => {
+																return (
+																	<FormItem
+																		key={item.id}
+																		className="flex flex-row items-start space-x-3 space-y-0"
+																	>
+																		<FormControl>
+																			<Checkbox
+																				checked={field.value?.includes(item.id)}
+																				name="materials"
+																				onCheckedChange={(checked) => {
+																					return checked
+																						? field.onChange([
+																								...field.value,
+																								item.id,
+																							])
+																						: field.onChange(
+																								field.value?.filter(
+																									(value) => value !== item.id,
+																								),
+																							);
+																				}}
+																			/>
+																		</FormControl>
+																		<FormLabel className="font-normal">
+																			{item.name}
+																		</FormLabel>
+																	</FormItem>
+																);
+															}}
+														/>
+													);
+												})}
 											</div>
 
 											<FormMessage />
@@ -297,17 +319,15 @@ const form = useForm<z.infer<typeof productSchema>>({
 								/>
 							</div>
 						</div>
+						<Separator className="my-3" />
 						<div className="grid gap-2">
-							<Label htmlFor="tags">Tags</Label>
-							<Input id="tags" placeholder="Enter tags separated by commas" />
+							<Button disabled={pending} aria-disabled={pending}  className="max-w-sm" type="submit">
+								{pending ? <CircleDashed className="animate-spin" /> : "Create Product"}
+							</Button>
 						</div>
 					</form>
 				</Form>
 			</CardContent>
-			<CardFooter className="flex justify-end gap-2">
-				<Button variant="outline">Cancel</Button>
-				<Button>Create Product</Button>
-			</CardFooter>
 		</Card>
 	);
 }

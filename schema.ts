@@ -29,7 +29,7 @@ export const productSchema = z.object({
 		.min(20, "Description must be at least 20 characters long"),
 	stock: z.coerce.number().int().min(0),
 	price: z.coerce.number().positive(),
-  is_featured: z.boolean().default(false),
+  is_featured: z.boolean().default(false).optional(),
   categories: z.array(z.coerce.number()),
   materials: z.array(z.coerce.number()),
 });
