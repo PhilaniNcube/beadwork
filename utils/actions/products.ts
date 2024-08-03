@@ -13,7 +13,6 @@ export async function createProductAction(
 	const supabase = createClient();
 
   const is_featured = formData.get("is_featured")  === "on";
-  console.log(formData.get("categories"), formData.getAll("categories"), formData.get("materials"), formData.getAll("materials"));
 
 	const validatedFields = productSchema.safeParse({
 		title: formData.get("title"),
@@ -25,7 +24,6 @@ export async function createProductAction(
 		materials: formData.getAll("materials"),
 	});
 
-  console.log(JSON.stringify(validatedFields, null, 2));
 
 
 	if (!validatedFields.success) {
@@ -60,7 +58,6 @@ export async function createProductAction(
       }
     })).select("*");
 
-    console.log(JSON.stringify(categoriesData));
 
   }
 

@@ -34,6 +34,16 @@ export const productSchema = z.object({
   materials: z.array(z.coerce.number()),
 });
 
+export const editProductSchema = z.object({
+	title: z.string().min(2),
+	description: z
+		.string()
+		.min(20, "Description must be at least 20 characters long"),
+	stock: z.coerce.number().int().min(0),
+	price: z.coerce.number().positive(),
+  is_featured: z.boolean().default(false).optional(),
+});
+
 
 export const shippingSchema = z.object({
   street_address: z.string().min(2),

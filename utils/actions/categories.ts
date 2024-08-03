@@ -16,7 +16,7 @@ export async function createCategoryAction(prevState:unknown, formData:FormData)
 
 
   if(!validatedFields.success){
-    console.log(JSON.stringify(validatedFields, null, 2));
+
     return {errors: validatedFields.error.flatten().fieldErrors, status: 400};
   }
 
@@ -32,7 +32,6 @@ export async function createCategoryAction(prevState:unknown, formData:FormData)
     }
   ]).select("*");
 
-  console.log({data, error});
 
   if(error){
     return {error: error.message, status: 400};

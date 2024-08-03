@@ -29,8 +29,6 @@ export async function createMaterialAction(
 		])
 		.select("*");
 
-    console.log({data, error});
-
 	if (error) {
 		return { error: error.message, status: 400 };
 	}

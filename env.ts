@@ -6,6 +6,8 @@ const envVariables = z.object({
 	NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
 	SERVICE_ROLE: z.string(),
 	PROJECT_ID: z.string(),
+	UPLOADTHING_SECRET: z.string(),
+	UPLOADTHING_APP_ID: z.string(),
 });
 
 envVariables.parse(process.env);

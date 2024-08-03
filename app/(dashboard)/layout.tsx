@@ -35,6 +35,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import type { ReactNode } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
+
 export default function Dashboard({children}:{children:ReactNode}) {
 	return (
 		<div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -198,6 +199,7 @@ export default function Dashboard({children}:{children:ReactNode}) {
 					{children}
 				</main>
 			</div>
+
 		</div>
 	);
 }
