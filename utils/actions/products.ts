@@ -112,18 +112,15 @@ export async function editProductAction(
 		return { errors: validatedFields.error.flatten().fieldErrors, status: 400, message: "Invalid data" };
 	}
 
-  const slug = slugify(validatedFields.data.title, { lower: true, replacement: "-", strict: true });
+  // const slug = slugify(validatedFields.data.title, { lower: true, replacement: "-", strict: true });
 
-  const {data, error} = await supabase.from("products").insert([
-    {
-      title: validatedFields.data.title,
+  const {data, error} = await supabase.from("products").update(
+  {title: validatedFields.data.title,
       description: validatedFields.data.description,
       stock: validatedFields.data.stock,
       price: validatedFields.data.price,
-      is_featured: validatedFields.data.is_featured,
-      slug,
-    }
-  ]).select("id").single();
+      is_featured: validatedFields.data.is_featured}
+  ).select("id").single();
 
   if (error) {
     return { error: error.details, status: 500, message: error.message };
@@ -132,7 +129,7 @@ export async function editProductAction(
 
   revalidatePath("/products");
   revalidatePath("/dashboard", "layout");
-  revalidatePath("/dashboard/products/", "layout");
+  revalidatePath(`/dashboard/products/${data.id}`, "layout");
 
   redirect(`/dashboard/products/${data.id}`);
 
