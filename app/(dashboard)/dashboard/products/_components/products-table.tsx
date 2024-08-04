@@ -43,9 +43,7 @@ export default function ProductsTable({ products }:Props) {
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead className="hidden w-[100px] sm:table-cell">
-								<span className="sr-only">Image</span>
-							</TableHead>
+
 							<TableHead>Name</TableHead>
 							<TableHead>Stock</TableHead>
 							<TableHead className="hidden md:table-cell">Price</TableHead>
@@ -61,15 +59,7 @@ export default function ProductsTable({ products }:Props) {
 					<TableBody>
 						{products.map((product) => (
 							<TableRow key={product.id}>
-								<TableCell className="hidden sm:table-cell">
-									<Image
-										alt="Product image"
-										className="object-cover rounded-md aspect-square"
-										height="64"
-										src="/placeholder.svg"
-										width="64"
-									/>
-								</TableCell>
+
 								<TableCell className="font-medium">{product.title}</TableCell>
 								<TableCell>
 									<Badge variant="outline">{product.stock}</Badge>

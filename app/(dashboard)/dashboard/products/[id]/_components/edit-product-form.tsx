@@ -201,7 +201,7 @@ export default function EditProduct({
 								{pending ? (
 									<CircleDashed className="animate-spin" />
 								) : (
-									"Create Product"
+									"Save Product"
 								)}
 							</Button>
 						</div>

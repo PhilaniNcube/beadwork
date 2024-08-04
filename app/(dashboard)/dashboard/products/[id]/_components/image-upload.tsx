@@ -54,13 +54,7 @@ export default function ImageUpload({ productId, images }: Props) {
 							formAction(formData);
 						});
 
-						if (state?.error) {
-							alert(state.error);
-						}
 
-						if (state?.message) {
-							alert(state.message);
-						}
 					}}
 					onUploadError={(error: Error) => {
 						// Do something with the error.
