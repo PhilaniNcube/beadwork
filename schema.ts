@@ -96,9 +96,12 @@ export type ProductDetailsType = {
 		is_primary: boolean;
 		product_id: number;
 	}[];
-	product_categories: ProductCategory[];
-	product_materials: {
-		product_id: number;
-		material_id: number;
+	categories: {
+		id: number;
+		name: string;
+	}[];
+	materials: {
+		id: number;
+		name: string;
 	}[];
 };

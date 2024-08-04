@@ -63,20 +63,20 @@ export default function ProductDetails({product}: Props) {
 						<h1 className="text-3xl font-bold">{product.title}</h1>
 						<div className="flex flex-col items-start gap-2">
 							<div className="flex items-center gap-2 mt-4 mb-4">
-								{/* <h2 className="text-sm font-medium">Category:</h2>
-								{product.product_categories.length > 0 && product.product_categories.map((category) => (
+								<h2 className="text-sm font-medium">Category:</h2>
+								{product.categories.length > 0 && product.categories.map((category) => (
 									<Badge
 										key={category.id}
 										variant="outline"
-										className="bg-muted text-md"
+										className="bg-muted"
 									>
 										{category.name}
 									</Badge>
-								))} */}
+								))}
 							</div>
-							<div className="flex items-center gap-2">
-								{/* <h2 className="text-sm font-medium">Material:</h2> */}
-								{/* {product.product_materials.map((material) => (
+							<div className="flex items-center gap-2 mb-4">
+								<h2 className="text-sm font-medium">Material:</h2>
+								{product.materials.length > 0 && product.materials.map((material) => (
 									<Badge
 										key={material.name}
 										variant="outline"
@@ -84,7 +84,7 @@ export default function ProductDetails({product}: Props) {
 									>
 										{material.name}
 									</Badge>
-								))} */}
+								))}
 							</div>
 						</div>
 					</div>
