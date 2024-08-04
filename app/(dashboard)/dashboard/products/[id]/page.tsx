@@ -6,6 +6,7 @@ import EditProduct from "./_components/edit-product-form";
 import ImageUpload from "./_components/image-upload";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditProductCategories from "./_components/edit-product-categories";
+import EditProductMaterials from "./_components/edit-product-materials";
 
 const DashboardProducts = async ({
 	params: { id },
@@ -58,6 +59,13 @@ const DashboardProducts = async ({
 									productId={productResult.id}
 									categories={categories}
 									productCategories={productCategories}
+								/>
+							)}
+							{materials && productMaterials && (
+								<EditProductMaterials
+									productId={productResult.id}
+									materials={materials}
+									productMaterials={productMaterials}
 								/>
 							)}
 						</div>
