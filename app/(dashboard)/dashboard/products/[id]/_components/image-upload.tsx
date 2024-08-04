@@ -36,7 +36,7 @@ export default function ImageUpload({ productId, images }: Props) {
 	const [pending, startTransition] = useTransition();
 
 	return (
-		<Card className="flex-1">
+		<Card className="flex-1 max-w-[400px]">
 			<CardHeader>
 				<CardTitle>Upload Image</CardTitle>
 				<CardDescription>Upload an image for this product</CardDescription>
@@ -62,7 +62,7 @@ export default function ImageUpload({ productId, images }: Props) {
 					}}
 				/>
 				<div className="grid grid-cols-2 gap-3 mt-4">
-          {images.map((image) => <Image className="object-cover w-full" key={image.id} src={image.image_url} width={100} height={100} alt="Image" />)}
+          {images.map((image) => <Image className="object-cover w-full aspect-square" key={image.id} src={image.image_url} width={100} height={100} alt="Image" />)}
         </div>
 			</CardContent>
 		</Card>
