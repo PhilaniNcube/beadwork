@@ -31,7 +31,7 @@ import type { Database } from "@/supabase";
 
 import { SubmitButton } from "@/components/submit-button";
 import { useFormState } from "react-dom";
-import { createProductAction } from "@/utils/actions/products";
+import { createProductAction, editProductAction } from "@/utils/actions/products";
 import { Separator } from "@/components/ui/separator";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -58,7 +58,7 @@ export default function EditProduct({
 		mode: "onBlur",
 	});
 
-	const [state, formAction] = useFormState(createProductAction, null);
+	const [state, formAction] = useFormState(editProductAction, null);
 	const [pending, startTransition] = useTransition();
 
 	const handleSubmit = (data: z.infer<typeof editProductSchema>) => {

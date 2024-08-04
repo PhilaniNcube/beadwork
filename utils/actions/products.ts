@@ -89,3 +89,55 @@ export async function createProductAction(
 
 
 }
+
+export async function editProductAction(
+	prevState: unknown,
+	formData: FormData,
+) {
+	const supabase = createClient();
+
+  const is_featured = formData.get("is_featured")  === "on";
+
+	const validatedFields = productSchema.safeParse({
+		title: formData.get("title"),
+		description: formData.get("description"),
+		stock: formData.get("stock"),
+		price: formData.get("price"),
+		is_featured: is_featured,
+	});
+
+
+
+	if (!validatedFields.success) {
+		return { errors: validatedFields.error.flatten().fieldErrors, status: 400, message: "Invalid data" };
+	}
+
+  const slug = slugify(validatedFields.data.title, { lower: true, replacement: "-", strict: true });
+
+  const {data, error} = await supabase.from("products").insert([
+    {
+      title: validatedFields.data.title,
+      description: validatedFields.data.description,
+      stock: validatedFields.data.stock,
+      price: validatedFields.data.price,
+      is_featured: validatedFields.data.is_featured,
+      slug,
+    }
+  ]).select("id").single();
+
+  if (error) {
+    return { error: error.details, status: 500, message: error.message };
+  }
+
+
+  revalidatePath("/products");
+  revalidatePath("/dashboard", "layout");
+  revalidatePath("/dashboard/products/", "layout");
+
+  redirect(`/dashboard/products/${data.id}`);
+
+  return { status: 200, message: "Product created successfully" };
+
+
+
+}
