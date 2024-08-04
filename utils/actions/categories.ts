@@ -46,3 +46,45 @@ export async function createCategoryAction(prevState:unknown, formData:FormData)
 
 
 }
+
+
+export async function updateProductCategoryAction(prevState:unknown, formData:FormData) {
+  const supabase = createClient();
+
+  // get the product id from the formData
+  const product_id = Number(formData.get("product_id"));
+
+  // get the category id from the formData as either
+  const category_id = Number(formData.get("category_id")) ;
+
+
+  // check if the category is already assigned to the product
+  const {data: existingCategory, error: existingCategoryError} = await supabase.from("product_categories").select("*").eq("product_id", product_id).eq("category_id", category_id).single();
+
+  // if the category is already assigned to the product, delete the category from the product
+  if(existingCategory){
+    const {error} = await supabase.from("product_categories").delete().eq("product_id", existingCategory.product_id).eq("category_id", existingCategory.category_id);
+
+    if(error){
+      return {error: error.message, status: 400};
+    }
+
+    revalidatePath(`/dashboard/products/${product_id}`, "layout");
+    return {status: 200};
+  }
+
+  // if the category is not already assigned to the product, insert the category to the product
+  const {data, error} = await supabase.from("product_categories").insert([
+    {
+      product_id,
+      category_id
+    }
+  ]).select("*");
+
+  if(error){
+    return {error: error.message, status: 400};
+  }
+
+  revalidatePath(`/dashboard/products/${product_id}`, "layout");
+
+}

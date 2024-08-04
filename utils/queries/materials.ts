@@ -30,3 +30,13 @@ export async function getMaterialByName(name: string) {
 
   return { data, status: 200 };
 }
+
+export async function getProductMaterialsByProductId(id: number) {
+  const supabase = createClient();
+  const { data, error } = await supabase.from("product_materials").select("*").eq("product_id", id);
+  if (error) {
+    return [];
+  }
+
+  return data;
+}

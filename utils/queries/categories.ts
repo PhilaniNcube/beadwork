@@ -35,3 +35,16 @@ export async function getCategoryById(id:number) {
 
   return { data, status: 200 };
 }
+
+
+export async function getProductCategoriesByProductId(id:number) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("product_categories").select("*").eq("product_id", id);
+
+  if (error) {
+    return [];
+  }
+
+  return data;
+}
