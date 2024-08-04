@@ -81,7 +81,7 @@ const EditProductCategories = ({
                     });
 									}}
 									className={cn(
-										"p-1 rounded-full hover:bg-primary/80",
+										"py-1 px-2 rounded-full hover:bg-primary/80",
 										isCategorySelected
 											? "bg-green-700 text-white"
 											: "bg-muted text-primary",
