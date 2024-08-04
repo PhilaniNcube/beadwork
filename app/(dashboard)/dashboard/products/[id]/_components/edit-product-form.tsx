@@ -31,7 +31,10 @@ import type { Database } from "@/supabase";
 
 import { SubmitButton } from "@/components/submit-button";
 import { useFormState } from "react-dom";
-import { createProductAction, editProductAction } from "@/utils/actions/products";
+import {
+	createProductAction,
+	editProductAction,
+} from "@/utils/actions/products";
 import { Separator } from "@/components/ui/separator";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -39,21 +42,20 @@ import { Circle, CircleDashed } from "lucide-react";
 import CreateCategory from "../../_components/create-category";
 import CreateMaterial from "../../_components/create-material";
 
+
 type Props = {
- product: Database['public']['Tables']['products']['Row']
+	product: Database["public"]["Tables"]["products"]["Row"];
 };
 
-export default function EditProduct({
-	product,
-}: Props) {
+export default function EditProduct({ product }: Props) {
 	const form = useForm<z.infer<typeof editProductSchema>>({
 		resolver: zodResolver(editProductSchema),
 		defaultValues: {
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      stock: product.stock,
-      is_featured: product.is_featured,
+			title: product.title,
+			description: product.description,
+			price: product.price,
+			stock: product.stock,
+			is_featured: product.is_featured,
 		},
 		mode: "onBlur",
 	});
@@ -62,9 +64,8 @@ export default function EditProduct({
 	const [pending, startTransition] = useTransition();
 
 	const handleSubmit = (data: z.infer<typeof editProductSchema>) => {
-
 		const formData = new FormData();
-
+		formData.append("id", product.id.toString());
 		formData.append("title", data.title);
 		formData.append("description", data.description);
 		formData.append("stock", data.stock.toString());
@@ -89,7 +90,13 @@ export default function EditProduct({
 			<CardContent>
 				<Form {...form}>
 					<form
-						onSubmit={form.handleSubmit(handleSubmit)}
+						action={(formData: FormData) => {
+							startTransition(async () => {
+								formData.append("id", product.id.toString());
+								const data = await formAction(formData);
+								console.log({ data });
+							});
+						}}
 						className="grid gap-6"
 					>
 						<div className="grid gap-2">
@@ -192,18 +199,9 @@ export default function EditProduct({
 						</div>
 
 						<div className="grid gap-2">
-							<Button
-								disabled={pending}
-								aria-disabled={pending}
-								className="max-w-sm"
-								type="submit"
-							>
-								{pending ? (
-									<CircleDashed className="animate-spin" />
-								) : (
-									"Save Product"
-								)}
-							</Button>
+							<SubmitButton className="max-w-sm" type="submit">
+								Save Product
+							</SubmitButton>
 						</div>
 					</form>
 				</Form>

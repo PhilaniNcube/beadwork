@@ -35,6 +35,7 @@ export const productSchema = z.object({
 });
 
 export const editProductSchema = z.object({
+  id: z.coerce.number(),
 	title: z.string().min(2),
 	description: z
 		.string()
