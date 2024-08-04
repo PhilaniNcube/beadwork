@@ -1,22 +1,32 @@
 import { createClient } from "../supabase/server";
 
+
+
 export async function getProducts(page = 1, limit = 10) {
 const supabase = createClient();
   //  create the values for pagination
 
-  const start = (page - 1) * limit;
-  const end = page * limit;
+		const start = ((page - 1) * limit)
+  const end = (page * limit) - 1;
+  console.log({ start, end });
 
-  const { data: products, error: productsError } = await supabase
+  const { data: products, error: productsError, count } = await supabase
     .from("products")
-    .select("*")
+    .select("*", { count: "exact" })
     .range(start, end);
 
   if (productsError) {
-    return [];
+    return {
+      error: productsError.message,
+      products: [],
+      count: 0,
+    };
   }
 
-  return products;
+  return {
+    products,
+    count,
+  }
 
 }
 

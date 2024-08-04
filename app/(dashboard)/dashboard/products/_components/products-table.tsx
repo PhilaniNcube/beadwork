@@ -34,11 +34,12 @@ import Link from "next/link";
 
 type Props = {
   products: Database['public']['Tables']['products']['Row'][];
+  count: number;
 }
 
-export default function ProductsTable({ products }:Props) {
+export default function ProductsTable({ products, count }:Props) {
 	return (
-		<Card>
+		<Card className="mb-2">
 			<CardContent>
 				<Table>
 					<TableHeader>
@@ -101,7 +102,7 @@ export default function ProductsTable({ products }:Props) {
 			</CardContent>
 			<CardFooter>
 				<div className="text-xs text-muted-foreground">
-					Showing <strong>1-10</strong> of <strong>32</strong> products
+					<strong>{count}</strong> products
 				</div>
 			</CardFooter>
 		</Card>

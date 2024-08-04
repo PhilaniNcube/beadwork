@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { getProducts } from "@/utils/queries/products";
+import PaginationComponent from "../_components/pagination";
 
 const Props = {
   searchParams: {
@@ -13,12 +14,15 @@ const Props = {
   }
 }
 
-const DashboardProductsPage = async({searchParams: {page = "1", limit = "10"}}: {searchParams: {page: string, limit: string}}) => {
+const DashboardProductsPage = async({searchParams: {page = "1", }}: {searchParams: {page: string}}) => {
 
   const pageValue= Number(page);
-  const limitValue = Number(limit);
 
-  const products = await getProducts(pageValue, limitValue);
+
+  const {count, products, error} = await getProducts(pageValue, 10);
+
+  // get the max pages count
+  const maxPages = count ? Math.ceil(count / 10) : 1;
 
   return (
 			<div className="">
@@ -40,7 +44,12 @@ const DashboardProductsPage = async({searchParams: {page = "1", limit = "10"}}: 
 					</CardHeader>
 				</Card>
 				<ScrollArea className="h-[500px] mt-3">
-					<ProductsTable products={products} />
+          {count && products &&
+					<ProductsTable count={count} products={products} />
+          }
+          {count &&
+          <PaginationComponent count={count} maxPages={maxPages} page={pageValue} href="/dashboard/products" />
+          }
 				</ScrollArea>
 			</div>
 		);
