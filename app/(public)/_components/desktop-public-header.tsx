@@ -28,8 +28,17 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
 							/>
 						</Button>
 					</form>
+          <div className="flex items-center gap-x-3">
+            <Link href="/shop" className="uppercase">
+              Shop
+            </Link>
+            <Link href="/categories" className="uppercase">
+              Categories
+            </Link>
+          </div>
 					{user ? (
 						<div className="flex items-center gap-x-4">
+
 							<Link href="/account">
 								<UserIcon size={24} />
 							</Link>
