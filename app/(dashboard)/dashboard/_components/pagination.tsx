@@ -20,7 +20,7 @@ export default function PaginationComponent({
 	count,
 	href,
 }: { href: string; page: number; maxPages: number; count: number }) {
-	console.log({ page, maxPages, count, href });
+
 
 	return (
 		<Pagination className="flex justify-start">
