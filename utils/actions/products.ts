@@ -107,7 +107,6 @@ export async function editProductAction(
 		is_featured: is_featured,
 	});
 
-  console.log(JSON.stringify(validatedFields));
 
 	if (!validatedFields.success) {
 		return { errors: validatedFields.error.flatten().fieldErrors, status: 400, message: "Invalid data" };
@@ -128,7 +127,6 @@ export async function editProductAction(
 			.select("id")
 			.single();
 
-  console.log({data, error});
 
   if (error) {
     return { error: error.details, status: 500, message: error.message };

@@ -36,7 +36,7 @@ import {
 	editProductAction,
 } from "@/utils/actions/products";
 import { Separator } from "@/components/ui/separator";
-import { useTransition } from "react";
+import { startTransition, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Circle, CircleDashed } from "lucide-react";
 import CreateCategory from "../../_components/create-category";
@@ -61,23 +61,9 @@ export default function EditProduct({ product }: Props) {
 	});
 
 	const [state, formAction] = useFormState(editProductAction, null);
-	const [pending, startTransition] = useTransition();
 
-	const handleSubmit = (data: z.infer<typeof editProductSchema>) => {
-		const formData = new FormData();
-		formData.append("id", product.id.toString());
-		formData.append("title", data.title);
-		formData.append("description", data.description);
-		formData.append("stock", data.stock.toString());
-		formData.append("price", data.price.toString());
-		if (data.is_featured) {
-			formData.append("is_featured", "on");
-		}
 
-		startTransition(() => {
-			formAction(formData);
-		});
-	};
+
 
 	return (
 		<Card className="w-full max-w-4xl">
@@ -91,10 +77,9 @@ export default function EditProduct({ product }: Props) {
 				<Form {...form}>
 					<form
 						action={(formData: FormData) => {
-							startTransition(async () => {
+							startTransition(() => {
 								formData.append("id", product.id.toString());
-								const data = await formAction(formData);
-								console.log({ data });
+								 formAction(formData);
 							});
 						}}
 						className="grid gap-6"
