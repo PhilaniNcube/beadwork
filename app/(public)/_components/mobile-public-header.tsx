@@ -7,6 +7,7 @@ import MobileSlide from "./mobile-slide";
 import { ArrowLeft, ShoppingBasket, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/stores/cart-provider";
+import { cn } from "@/lib/utils";
 
 const MobilePublicHeader = ({ user }: { user: User | null }) => {
 
@@ -35,10 +36,15 @@ const MobilePublicHeader = ({ user }: { user: User | null }) => {
 										</Button>
 									</form>
 									<Link href="/cart" className="relative isolate">
-										<small className="absolute flex items-center justify-center w-6 h-6 text-sm text-red-500 rounded-full -right-3 -top-2">
-											{cartCount}
-										</small>
-										<ShoppingBasket size={24} />
+										<ShoppingBasket
+											className={cn(
+												cart?.products.length !== undefined &&
+													cart?.products?.length > 0
+													? "text-red-600 fill-red-600"
+													: "text-white",
+											)}
+											size={24}
+										/>
 									</Link>
 								</div>
 							) : (
@@ -46,10 +52,15 @@ const MobilePublicHeader = ({ user }: { user: User | null }) => {
 									<Link href="/login">Log In</Link>
 									<Link href="/sign-up">Sign up</Link>
 									<Link href="/cart" className="relative isolate">
-										<small className="absolute flex items-center justify-center w-6 h-6 text-sm text-red-500 rounded-full -right-3 -top-2">
-											{cartCount}
-										</small>
-										<ShoppingBasket size={24} />
+										<ShoppingBasket
+											className={cn(
+												cart?.products.length !== undefined &&
+													cart?.products?.length > 0
+													? "text-red-600 fill-red-600"
+													: "text-white",
+											)}
+											size={24}
+										/>
 									</Link>
 								</div>
 							)}
