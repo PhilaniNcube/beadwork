@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import type { ProductDetailsType } from "@/schema";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { cn } from "@/lib/utils";
+import { addToCart } from "@/stores/cart-store";
+import { useCart } from "@/stores/cart-provider";
 
 type Props = {
   product: ProductDetailsType;
@@ -19,6 +21,13 @@ type Props = {
 
 
 export default function ProductDetails({product}: Props) {
+
+  const cartHook = useCart();
+  const setCart = cartHook ? cartHook(store => store.setCart) : null;
+
+
+
+
 	return (
 		<div className="container px-0 py-12 mx-auto">
 			<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -104,7 +113,7 @@ export default function ProductDetails({product}: Props) {
 							{product.stock} in stock
 						</Badge>
 					</div>
-					<Button size="lg">Add to Cart</Button>
+					<Button type="button" onClick={() => setCart ? setCart(addToCart({...product, quantity: 1})) : null} size="lg">Add to Cart</Button>
 				</div>
 			</div>
 		</div>
