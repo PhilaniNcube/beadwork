@@ -2,17 +2,22 @@
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/stores/cart-provider";
+
 import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
+import { Trash } from "lucide-react";
+import { useCartStore } from "@/stores/cart-provider";
 
 export default function CartPage() {
 
-	const cartHook = useCart();
-	const cart = cartHook ? cartHook((state) => state.cart) : null;
-  console.log({cart})
+ const { products: cartItems, addToCart, removeFromCart } = useCartStore((state) => state);
+
+
+
+  console.log({cartItems})
+
 	const subtotal =
-		cart?.products.reduce(
+		cartItems.reduce(
 			(total, item) => total + item.price * item.quantity,
 			0,
 		) || 0;
@@ -23,11 +28,12 @@ export default function CartPage() {
 			<h1 className="mb-8 text-3xl font-bold">Your Cart</h1>
 			<div className="grid gap-8">
 				<div className="grid gap-6">
-					{cart?.products.map((item) => (
+					{cartItems.map((item) => (
 						<div
 							key={item.id}
-							className="grid grid-cols-[100px_1fr_100px] items-center gap-4"
+							className="grid grid-cols-[100px_1fr_100px] items-center gap-4 relative"
 						>
+              <Trash className="absolute top-0 right-0 w-6 h-6 text-red-500 cursor-pointer" onClick={() => removeFromCart({...item, quantity: 1})} />
 							<img
 								src={item.product_images[0].image_url}
 								alt={item.title}

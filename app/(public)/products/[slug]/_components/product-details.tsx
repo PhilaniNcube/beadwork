@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 import type { ProductDetailsType } from "@/schema";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { cn } from "@/lib/utils";
-import { addToCart } from "@/stores/cart-store";
-import { useCart } from "@/stores/cart-provider";
+import { useCartStore } from "@/stores/cart-provider";
+
 
 type Props = {
   product: ProductDetailsType;
@@ -22,8 +22,7 @@ type Props = {
 
 export default function ProductDetails({product}: Props) {
 
-  const cartHook = useCart();
-  const setCart = cartHook ? cartHook(store => store.setCart) : null;
+ const {products: cartItems, addToCart} = useCartStore((state) => state);
 
 
 
@@ -113,7 +112,7 @@ export default function ProductDetails({product}: Props) {
 							{product.stock} in stock
 						</Badge>
 					</div>
-					<Button type="button" onClick={() => setCart ? setCart(addToCart({...product, quantity: 1})) : null} size="lg">Add to Cart</Button>
+					<Button type="button" onClick={() => addToCart({...product, quantity: 1})} size="lg">Add to Cart</Button>
 				</div>
 			</div>
 		</div>

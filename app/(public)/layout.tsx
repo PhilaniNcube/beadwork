@@ -1,3 +1,4 @@
+import { CartStoreProvider } from "@/stores/cart-provider";
 import Footer from "./_components/footer";
 import PublicHeader from "./_components/public-header";
 
@@ -19,9 +20,11 @@ export default function PublicLayout({
 }) {
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] min-h-[100dvh]">
-			<PublicHeader />
-			<main className="">{children}</main>
-			<Footer />
+			<CartStoreProvider>
+				<PublicHeader />
+				<main className="">{children}</main>
+				<Footer />
+			</CartStoreProvider>
 		</div>
 	);
 }

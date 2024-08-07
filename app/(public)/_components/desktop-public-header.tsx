@@ -4,18 +4,18 @@ import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/stores/cart-provider";
-import { cartCount } from "@/stores/cart-store";
+import { useCartStore } from "@/stores/cart-provider";
 import type { User } from "@supabase/supabase-js";
 import { ArrowBigLeft, ArrowLeft, Search, ShoppingBagIcon, ShoppingBasket, UserIcon } from "lucide-react";
 import Link from "next/link";
 
 const DesktopPublicHeader = ({ user }: { user: User | null }) => {
 
-  const cartHook = useCart();
-  const cart = cartHook ? cartHook((state) => state.cart) : null;
+ const { products: cartItems, addToCart } = useCartStore((state) => state);
 
-  const total = cartHook ? cartHook((state) => state.totalItems) : 0;
+
+
+
 
 
 
@@ -61,6 +61,13 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
 								</Button>
 							</form>
 							<Link href="/cart" className="relative isolate">
+								<small
+									className={cn(
+										"absolute top-0 right-0 -mt-2 -mr-2 px-1 text-xs text-white bg-red-500 rounded-full",
+									)}
+								>
+									{cartItems.length}
+								</small>
 								<ShoppingBasket size={24} />
 							</Link>
 						</div>
@@ -69,15 +76,14 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
 							<Link href="/login">Log In</Link>
 							<Link href="/sign-up">Sign up</Link>
 							<Link href="/cart" className="relative isolate">
-								<ShoppingBasket
+								<small
 									className={cn(
-										cart?.products.length !==
-											undefined && cart?.products?.length > 0
-											? "text-red-600 fill-red-600"
-											: "text-white",
+										"absolute top-0 right-0 -mt-2 -mr-2 px-1 text-xs text-white bg-red-500 rounded-full",
 									)}
-									size={24}
-								/>
+								>
+									{cartItems.length}
+								</small>
+								<ShoppingBasket size={24} />
 							</Link>
 						</div>
 					)}

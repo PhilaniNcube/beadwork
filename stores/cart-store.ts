@@ -1,7 +1,6 @@
 import {createStore} from 'zustand/vanilla';
-import type {Database} from '@/supabase'
 import type { ProductDetailsType } from '@/schema';
-import { revalidatePath } from 'next/cache';
+
 
 type CartProduct = ProductDetailsType & {
 	quantity: number;
@@ -12,77 +11,78 @@ export type Cart = {
 	};
 
 export type CartActions = {
-  addToCart: (Cart:Cart, product:CartProduct) => void,
-  subtractFromCart: (Cart:Cart, product:CartProduct) => void,
-  removeFromCart: (Cart:Cart, product:CartProduct) => void,
-  clearCart: (Cart:Cart) => void,
+  addToCart: ( product:CartProduct) => void,
+  subtractFromCart: ( product:CartProduct) => void,
+  removeFromCart: ( product:CartProduct) => void,
+  clearCart: () => void,
+
 }
 
 export type CartStore = Cart & CartActions
 
-// get the cart from local storage
+
 
 
 export const defaultInitState: Cart = {
   products: [],
+
 }
 
 
 
 const cart:Cart = {
   products:  [],
+
 }
 
 export const getCart = async (): Promise<Cart> => {
-
-
 	return cart;
 };
 
-export const totalItems = (cart:Cart) => {
-  return cart.products.reduce((acc, product) => acc + product.quantity, 0);
+export const createCartStore = (initState: Cart = cart) => {
+	return createStore<CartStore>((set) => ({
+		...initState,
+		 addToCart: (product: CartProduct) =>
+      set((state) => {
+        const productIndex = state.products.findIndex(
+          (p) => p.id === product.id,
+        );
+        if (productIndex === -1) {
+          return {
+            ...state,
+            products: [...state.products, { ...product, quantity: 1 }],
+          };
+        // biome-ignore lint/style/noUselessElse: <explanation>
+        } else {
+          const updatedProducts = state.products.map((p, index) =>
+            index === productIndex
+              ? { ...p, quantity: p.quantity + 1 }
+              : p
+          );
+          return {
+            ...state,
+            products: updatedProducts,
+          };
+        }
+      }),
+		subtractFromCart: (product: CartProduct) =>
+			set((state) => ({
+        products: state.products.map((p) => {
+          if (p.id === product.id) {
+            p.quantity -= 1;
+          }
+          return p;
+        }),
+      })),
+		removeFromCart: (product: CartProduct) =>
+			set((state) => ({products: state.products.filter((p) => p.id !== product.id)})),
+		clearCart: () =>
+			set((state) => ({products: []})),
+	}));
 };
 
-export const addToCart =  (product:CartProduct) => {
-  // check if the product is already in the cart
-  const productIndex = cart.products.findIndex(p => p.id === product.id);
-  if(productIndex === -1) {
-    cart.products.push({...product, quantity: 1});
-  } else {
-    cart.products[productIndex].quantity += 1;
-  }
-
-  return cart;
-};
-
-export const subtractFromCart = (product:CartProduct) => {
-  const productIndex = cart.products.findIndex(p => p.id === product.id);
-  if(productIndex === -1) {
-    return cart;
-  }
-  if(cart.products[productIndex].quantity === 1) {
-    cart.products = cart.products.filter(p => p.id !== product.id);
-  } else {
-    cart.products[productIndex].quantity -= 1;
-  }
 
 
-};
-
-export const removeFromCart = (product:CartProduct) => {
-  cart.products = cart.products.filter(p => p.id !== product.id);
 
 
-};
 
-export const clearCart = () => {
-  cart.products = [];
-
-
-};
-
-
-export const cartCount = () => {
-  console.log(cart.products.reduce((acc, product) => acc + product.quantity, 0));
-  return cart.products.reduce((acc, product) => acc + product.quantity, 0);
-}

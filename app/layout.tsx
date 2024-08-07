@@ -2,11 +2,11 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { getCart } from "@/stores/cart-store";
-import CartProvider from "@/stores/cart-provider";
+import  { CartStoreProvider } from "@/stores/cart-provider";
 
 const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+	? `https://${process.env.VERCEL_URL}`
+	: "http://localhost:3000";
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
@@ -16,23 +16,20 @@ export const metadata = {
 };
 
 export default async function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
+	const cart = await getCart();
 
+	return (
+		<html lang="en" className={GeistSans.className}>
+			<body className="">
 
-  const cart = await getCart();
+					{children}
+					<Toaster />
 
-
-  return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="">
-         <CartProvider cart={cart}>
-          {children}
-        <Toaster />
-         </CartProvider>
-      </body>
-    </html>
-  );
+			</body>
+		</html>
+	);
 }
