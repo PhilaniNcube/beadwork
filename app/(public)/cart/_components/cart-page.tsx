@@ -10,7 +10,7 @@ import { useCartStore } from "@/stores/cart-provider";
 
 export default function CartPage() {
 
- const { products: cartItems, addToCart, removeFromCart } = useCartStore((state) => state);
+ const { products: cartItems, addToCart, removeFromCart, subtractFromCart } = useCartStore((state) => state);
 
 
 
@@ -33,7 +33,10 @@ export default function CartPage() {
 							key={item.id}
 							className="grid grid-cols-[100px_1fr_100px] items-center gap-4 relative"
 						>
-              <Trash className="absolute top-0 right-0 w-6 h-6 text-red-500 cursor-pointer" onClick={() => removeFromCart({...item, quantity: 1})} />
+							<Trash
+								className="absolute top-0 right-0 w-6 h-6 text-red-500 cursor-pointer"
+								onClick={() => removeFromCart({ ...item, quantity: 1 })}
+							/>
 							<img
 								src={item.product_images[0].image_url}
 								alt={item.title}
@@ -44,9 +47,24 @@ export default function CartPage() {
 							/>
 							<div className="grid gap-1">
 								<h3 className="font-medium">{item.title}</h3>
-								<div className="flex items-center gap-2 text-muted-foreground">
-									<span>Quantity:</span>
-									<span>{item.quantity}</span>
+
+								<div className="flex gap-x-2">
+									{" "}
+									<Button
+										variant="outline"
+										onClick={() => subtractFromCart({ ...item, quantity: 1 })}
+									>
+										-
+									</Button>
+									<span className="flex items-center justify-center min-w-44">
+										Quantity {item.quantity}
+									</span>
+									<Button
+										variant="outline"
+										onClick={() => addToCart({ ...item, quantity: 1 })}
+									>
+										+
+									</Button>
 								</div>
 							</div>
 							<div className="grid gap-1 justify-self-end">
@@ -58,33 +76,30 @@ export default function CartPage() {
 						</div>
 					))}
 				</div>
-				<div className="grid gap-6 p-6 rounded-lg bg-muted/40">
+				<div className="grid gap-6 py-6 rounded-lg bg-muted/40">
 					<div className="grid gap-2">
-						<div className="flex items-center justify-between">
+
+						<Separator />
+						<div className="flex items-center justify-between text-lg font-medium">
 							<span>Subtotal</span>
 							<span className="font-medium">{formatCurrency(subtotal)}</span>
 						</div>
-						<div className="flex items-center justify-between">
-							<span>Discount</span>
-							<span className="font-medium -text-green-500">
-								-{formatCurrency(discount)}
-							</span>
-						</div>
-						<Separator />
-						<div className="flex items-center justify-between text-lg font-medium">
-							<span>Total</span>
-							<span>{formatCurrency(total)}</span>
-						</div>
 					</div>
-					<div className="flex flex-col justify-between gap-4 md:flex-row">
-						<Link href="/shop" className="flex-1">
-							<Button variant="outline" size="lg" className="w-full text-white bg-blue-700">
+					<div className="flex flex-col justify-between w-full gap-4 md:flex-row">
+						<Link href="/shop" className="flex-1 max-w-[200px]">
+							<Button
+								variant="outline"
+								size="lg"
+								className="w-full text-white bg-blue-700"
+							>
 								Continue Shopping
 							</Button>
 						</Link>
-						<Button size="lg" className="flex-1">
-							Proceed to Checkout
-						</Button>
+						<Link href="/checkout" className="flex-1 max-w-[200px]">
+							<Button size="lg" className="flex-1">
+								Proceed to Checkout
+							</Button>
+						</Link>
 					</div>
 				</div>
 			</div>
