@@ -17,6 +17,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import type { User } from "@supabase/supabase-js";
 import { SignUp } from "../../_components/sign-up";
 import Link from "next/link";
+import PayStackElements from "./paystack-element";
 
 export default function Checkout({ user }: { user: User | null }) {
 	const {
@@ -90,56 +91,7 @@ export default function Checkout({ user }: { user: User | null }) {
 							<>
 								{cartItems.length > 0 && (
 									<>
-										<h1 className="mb-4 text-2xl font-bold">Checkout</h1>
-										<form className="space-y-4">
-											<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-												<div>
-													<Label htmlFor="name">Name</Label>
-													<Input id="name" placeholder="John Doe" />
-												</div>
-												<div>
-													<Label htmlFor="email">Email</Label>
-													<Input
-														id="email"
-														type="email"
-														placeholder="john@example.com"
-													/>
-												</div>
-											</div>
-											<div>
-												<Label htmlFor="address">Address</Label>
-												<Textarea
-													id="address"
-													placeholder="123 Main St, Anytown USA"
-												/>
-											</div>
-											<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-												<div>
-													<Label htmlFor="payment-method">Payment Method</Label>
-													<Select name="payment-method">
-														<SelectTrigger>
-															<SelectValue placeholder="Select payment method" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectItem value="credit-card">
-																Credit Card
-															</SelectItem>
-															<SelectItem value="paypal">PayPal</SelectItem>
-															<SelectItem value="apple-pay">
-																Apple Pay
-															</SelectItem>
-														</SelectContent>
-													</Select>
-												</div>
-												<div>
-													<Label htmlFor="coupon">Coupon Code</Label>
-													<Input id="coupon" placeholder="Enter coupon code" />
-												</div>
-											</div>
-											<Button type="submit" className="w-full">
-												Place Order
-											</Button>
-										</form>
+										<PayStackElements user={user} />
 									</>
 								)}
 								{cartItems.length === 0 && (

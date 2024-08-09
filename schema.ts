@@ -52,6 +52,10 @@ export const shippingSchema = z.object({
 
 export const orderSchema = z.object({
 	total_amount: z.coerce.number().positive(),
+  phone_number: z.string(),
+  email: z.string().email(),
+  first_name: z.string(),
+  last_name: z.string(),
 	status: z
 		.enum(["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"])
 		.optional()

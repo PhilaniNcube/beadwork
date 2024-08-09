@@ -8,6 +8,9 @@ const envVariables = z.object({
 	PROJECT_ID: z.string(),
 	UPLOADTHING_SECRET: z.string(),
 	UPLOADTHING_APP_ID: z.string(),
+	PAYSTACK_PRIVATE_SECRECT: z.string(),
+  PAYSTACK_PUBLIC_SECRECT: z.string(),
+  BASE_URL: z.string(),
 });
 
 envVariables.parse(process.env);

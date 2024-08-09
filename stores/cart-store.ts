@@ -2,7 +2,7 @@ import {createStore} from 'zustand/vanilla';
 import type { ProductDetailsType } from '@/schema';
 
 
-type CartProduct = ProductDetailsType & {
+export type CartProduct = ProductDetailsType & {
 	quantity: number;
 };
 
