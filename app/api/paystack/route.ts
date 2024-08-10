@@ -67,14 +67,10 @@ export async function POST(req: Request) {
 			.update({
 				status: body.data.status === "success" ? "PROCESSING" : "PENDING",
 			})
-			.eq("transaction_id", body.data.reference)
-			.single();
+			.eq("transaction_id", body.data.reference).select("*").single();
 
       console.log(JSON.stringify({body, order, order_error}));
 
-		if (order_error) {
-			throw new Error(order_error.message);
-		}
 
 		return NextResponse.json({
 			status: "success",
