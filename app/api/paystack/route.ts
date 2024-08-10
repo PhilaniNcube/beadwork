@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/service";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -61,6 +61,7 @@ export async function POST(req: Request) {
 
 
 
+  console.log(JSON.stringify(body, null, 2));
 // update the payment status of the order
 		const { data: order, error: order_error } = await supabase
 			.from("orders")
@@ -69,7 +70,6 @@ export async function POST(req: Request) {
 			})
 			.eq("transaction_id", body.data.reference).select("*").single();
 
-      console.log(JSON.stringify({body, order, order_error}));
 
 
 		return NextResponse.json({
