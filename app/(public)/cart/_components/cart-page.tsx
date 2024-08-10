@@ -52,6 +52,7 @@ export default function CartPage() {
 									{" "}
 									<Button
 										variant="outline"
+										disabled={item.quantity <= 1}
 										onClick={() => subtractFromCart({ ...item, quantity: 1 })}
 									>
 										-
@@ -61,6 +62,7 @@ export default function CartPage() {
 									</span>
 									<Button
 										variant="outline"
+										disabled={item.quantity >= item.stock}
 										onClick={() => addToCart({ ...item, quantity: 1 })}
 									>
 										+
@@ -78,7 +80,6 @@ export default function CartPage() {
 				</div>
 				<div className="grid gap-6 py-6 rounded-lg bg-muted/40">
 					<div className="grid gap-2">
-
 						<Separator />
 						<div className="flex items-center justify-between text-lg font-medium">
 							<span>Subtotal</span>

@@ -24,6 +24,9 @@ export default function ProductDetails({product}: Props) {
 
  const {products: cartItems, addToCart} = useCartStore((state) => state);
 
+// check if the product is already in the cart and return the cart item itself
+const cartItem = cartItems.find((item) => item.id === product.id);
+
 
 
 
@@ -112,7 +115,7 @@ export default function ProductDetails({product}: Props) {
 							{product.stock} in stock
 						</Badge>
 					</div>
-					<Button type="button" onClick={() => addToCart({...product, quantity: 1})} size="lg">Add to Cart</Button>
+					<Button type="button" disabled={cartItem && cartItem?.quantity >= product.stock} onClick={() => addToCart({...product, quantity: 1})} size="lg">Add to Cart</Button>
 				</div>
 			</div>
 		</div>
