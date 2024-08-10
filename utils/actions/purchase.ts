@@ -140,7 +140,10 @@ export async function checkoutAction(
         price: item.price,
     }));
 
-    console.log(JSON.stringify(order, null, 2));
+    const { data: order_items_data, error: order_items_error } = await supabase.from("order_items").insert(order_items_insert).select("*");
+
+
+    console.log(JSON.stringify({ order_items_data, order_items_error }, null, 2));
 
 	// if the status is true, redirect to the authorization_url
 	redirect(paystack_response.data.authorization_url);

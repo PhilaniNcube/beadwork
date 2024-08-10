@@ -60,33 +60,28 @@ export async function POST(req: Request) {
 
 
 
-  console.log(body);
 
-  if(body.event !== "charge.success") {
+// update the payment status of the order
+		const { data: order, error: order_error } = await supabase
+			.from("orders")
+			.update({
+				status: body.data.status === "success" ? "PROCESSING" : "PENDING",
+			})
+			.eq("transaction_id", body.data.reference)
+			.single();
 
-    // update the payment status of the order
-				const { data: order, error: order_error } = await supabase.from("orders").update({
-          status: body.data.status === "success" ? "PROCESSING" : "CANCELLED",
-        }).eq("transaction_id", body.data.reference).single();
+      console.log(JSON.stringify({body, order, order_error}));
 
-        if(order_error) {
-          throw new Error(order_error.message);
-        }
+		if (order_error) {
+			throw new Error(order_error.message);
+		}
 
-        return NextResponse.json({
-          status: "success",
-          message: "Webhook received",
-          data: body,
-        })
+		return NextResponse.json({
+			status: "success",
+			message: "Webhook received",
+			data: body,
+		});
 
-  }
-
-
-return NextResponse.json({
-  status: "success",
-  message: "Webhook received",
-  data: body,
-})
 
 
 }
