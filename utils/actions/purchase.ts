@@ -127,6 +127,19 @@ export async function checkoutAction(
 			},
 		]).select("*").single();
 
+    if(order_error) {
+        throw new Error(order_error.message);
+    }
+
+
+    // create order items
+    const order_items_insert = order_items.map(item => ({
+        order_id: order.id,
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price,
+    }));
+
     console.log(JSON.stringify(order, null, 2));
 
 	// if the status is true, redirect to the authorization_url
