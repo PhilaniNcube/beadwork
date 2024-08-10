@@ -50,13 +50,11 @@ type ChargeWebhook = {
 
 export async function POST(req: Request) {
 	const supabase = createClient();
-	const reqHeaders = headers();
-	const { createHmac } = await import("node:crypto");
+
 
 	const body: ChargeWebhook = await req.json();
 
-	console.log(JSON.stringify(body, null, 2));
-	// update the payment status of the order
+
 	const { data: order, error: order_error } = await supabase
 		.from("orders")
 		.update({
@@ -101,6 +99,8 @@ export async function POST(req: Request) {
 			.eq("id", item.product_id)
 			.single();
 
+
+
 		if (product_error) {
 			return;
 		}
@@ -117,6 +117,8 @@ export async function POST(req: Request) {
 
 		console.log(updated_product);
 	}
+
+
 
 	return NextResponse.json({
 		status: "success",
