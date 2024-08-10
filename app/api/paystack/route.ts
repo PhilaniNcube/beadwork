@@ -58,13 +58,7 @@ export async function POST(req: Request) {
 
   const body: ChargeWebhook = await req.json();
 
-  const hash = createHmac("sha512", process.env.PAYSTACK_PRIVATE_SECRECT).update(JSON.stringify(body)).digest("hex");
 
- const paystackSignature = reqHeaders.get("x-paystack-signature");
-
-  if (hash !== paystackSignature) {
-    return new Response("Invalid signature", { status: 400 });
-  }
 
   console.log(body);
 
