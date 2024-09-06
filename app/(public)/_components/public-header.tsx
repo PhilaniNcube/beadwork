@@ -13,6 +13,7 @@ const PublicHeader = async () => {
 
   return <header className="text-black">
    <DesktopPublicHeader user={user} />
+   <MobilePublicHeader user={user} />
   </header>;
 };
 export default PublicHeader;
