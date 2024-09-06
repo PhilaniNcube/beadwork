@@ -1,5 +1,6 @@
 import FeaturedProducts from "./_components/home/featured-products";
 import HomepageAbout from "./_components/home/homepage-about";
+import HomePageCallToAction from "./_components/home/homepage-call-to-action";
 import HomepageHero from "./_components/home/homepage-hero";
 
 export default async function Home() {
@@ -9,6 +10,7 @@ export default async function Home() {
      <HomepageHero />
      <HomepageAbout />
      <FeaturedProducts />
+     <HomePageCallToAction />
     </div>
   );
 }
