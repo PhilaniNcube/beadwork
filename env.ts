@@ -11,6 +11,7 @@ const envVariables = z.object({
 	PAYSTACK_PRIVATE_SECRECT: z.string(),
   PAYSTACK_PUBLIC_SECRECT: z.string(),
   BASE_URL: z.string(),
+  RESEND_API_KEY:z.string(),
 });
 
 envVariables.parse(process.env);
