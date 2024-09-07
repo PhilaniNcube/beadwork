@@ -7,7 +7,7 @@ import ProductFilter from "./product-filter";
 
 type Props = {
   products: ProductListItemType[];
-}
+};
 
 const ProductList = async ({products}:Props) => {
 
@@ -30,7 +30,7 @@ const ProductList = async ({products}:Props) => {
       <Container>
         <div className="flex items-start">
 
-          <div className="@container px-0 grid md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="@container px-0 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductListItem key={product.id} product={product} />
             ))}

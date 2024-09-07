@@ -6,7 +6,7 @@ import Link from "next/link";
 
 type Props = {
   product: ProductListItemType;
-}
+};
 
 const ProductListItem = ({product}:Props) => {
   return (

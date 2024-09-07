@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const categories = [
@@ -38,8 +39,11 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
   const { products: cartItems, addToCart } = useCartStore((state) => state);
+
+  const router = useRouter();
+
+
 
   return (
     <nav className="hidden bg-white shadow md:block">
@@ -73,7 +77,10 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               <label htmlFor="search" className="sr-only">
                 Search
               </label>
-              <div className="relative">
+              <form className="relative" action={(formData:FormData) => {
+                   const search = formData.get("search");
+                    router.push(`/shop?q=${search}`);
+              }}>
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Search
                     className="w-5 h-5 text-gray-400"
@@ -87,7 +94,7 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
                   className="block w-full py-2 pl-10 pr-3 leading-5 placeholder-gray-500 bg-white border border-gray-300 rounded-md focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
                   placeholder="Search"
                 />
-              </div>
+              </form>
             </div>
             <div className="flex flex-row ml-4">
               <Button variant="ghost" className="relative" size="icon">

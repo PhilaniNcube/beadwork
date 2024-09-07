@@ -8,18 +8,16 @@ const supabase = createClient();
 
 	const start = ((page - 1) * limit)
   const end = (page * limit) - 1;
-  console.log({ start, end });
+
 
   const { data: products, error: productsError, count } = await supabase
     .from("products")
     .select("*", { count: "exact" })
-    .range(start, end);
+    .range(start, end)
 
   if (productsError) {
     return {
       error: productsError.message,
-      products: [],
-      count: 0,
     };
   }
 
@@ -80,17 +78,22 @@ export const getProductImages = async (productId: number) => {
 }
 
 
-export const getProductsWithImages = async (page = 1) => {
+export const getProductsWithImages = async (page = 1, search = '') => {
 const supabase = createClient();
 //  create the values for pagination
 
 const start = (page - 1) * 18;
 const end = page * 18 - 1;
-console.log({ start, end });
+console.log({ start, end, search });
 
-const { data: products, error: productsError, count } = await supabase
+const {
+  data: products,
+  error: productsError,
+  count,
+} = await supabase
   .from("products")
   .select("*, product_images(*)", { count: "exact" })
+  .ilike("title", `%${search}%`)
   .range(start, end);
 
 if (productsError) {
@@ -176,6 +179,31 @@ export async function getProductsByCategoryId(id:number) {
       slug: item.products?.slug,
     };
   });
+}
+
+export async function getSearchProducts(search = '', page = 1) {
+  const supabase = createClient();
+
+	const start = (page - 1) * 10;
+  const end = page * 10 - 1;
+
+  const {
+    data: products,
+    error: productsError,
+    count,
+  } = await supabase
+    .from("products")
+    .select("*, product_images(image_url)", { count: "exact" })
+    .or(`title.ilike.%${search}%,description.ilike.%${search}%`)
+    .range(start, end);
+
+  console.log({ products, productsError });
+
+  if (productsError) {
+    return [];
+  }
+
+  return products;
 }
 
 
