@@ -20,7 +20,7 @@ const ProductListItem = ({product}:Props) => {
 					height={500}
 					src={product.product_images[0].image_url}
 					alt={product.title}
-					className="object-cover w-full rounded-md aspect-square"
+					className="object-cover w-full aspect-square"
 				/>
 				<div className="p-3">
 					<h3 className="mt-2 font-semibold text-slate-600 text-md line-clamp-1">
@@ -29,7 +29,7 @@ const ProductListItem = ({product}:Props) => {
 					<h4 className="text-lg font-bold text-slate-950">
 						{formatCurrency(product.price)}
 					</h4>
-					<Button className="w-full mt-2">View Product</Button>
+					<Button className="w-full mt-2 rounded-none">View Product</Button>
 				</div>
 				{/* <p className="mt-1 text-sm text-gray-500">{product.description}</p> */}
 			</Link>

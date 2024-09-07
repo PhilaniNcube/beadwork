@@ -90,8 +90,19 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               </div>
             </div>
             <div className="flex flex-row ml-4">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" className="relative" size="icon">
                 <ShoppingBag className="w-6 h-6" aria-hidden="true" />
+                {cartItems.length > 0 && (
+                  <em
+                    className={cn(
+                      "text-sm font-semibold absolute top-1 right-0",
+                      cartItems.length > 0 ? "text-red-600" : "",
+                    )}
+                  >
+                    {cartItems.length}
+                  </em>
+                )}
+
                 <span className="sr-only">Shopping cart</span>
               </Button>
 
@@ -125,8 +136,6 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               )}
             </div>
           </div>
-
-
         </div>
       </div>
     </nav>

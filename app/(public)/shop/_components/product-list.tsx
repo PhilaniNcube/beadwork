@@ -1,20 +1,43 @@
 import Container from "@/components/container";
 import type { ProductListItemType } from "@/schema";
 import ProductListItem from "./product-list-item";
+import { getCategories } from "@/utils/queries/categories";
+import { getMaterials } from "@/utils/queries/materials";
+import ProductFilter from "./product-filter";
 
 type Props = {
   products: ProductListItemType[];
 }
 
-const ProductList = ({products}:Props) => {
+const ProductList = async ({products}:Props) => {
+
+  const categoriesData =  getCategories();
+  const materialsData =  getMaterials();
+
+  const [categories, materials] = await Promise.all([categoriesData, materialsData]);
+
+  if (!products) {
+    return null;
+  }
+
+  if (!categories || !materials || !categories.data || !materials.data) {
+    return null;
+  }
+
+
   return (
-			<section className="mt-8">
-				<Container>
-          <div className="@container px-0 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product) => <ProductListItem key={product.id} product={product} />)}
+    <section className="mt-8">
+      <Container>
+        <div className="flex items-start">
+
+          <div className="@container px-0 grid md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductListItem key={product.id} product={product} />
+            ))}
           </div>
-        </Container>
-			</section>
-		);
+        </div>
+      </Container>
+    </section>
+  );
 };
 export default ProductList;

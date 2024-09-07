@@ -13,9 +13,6 @@ export default function CartPage() {
  const { products: cartItems, addToCart, removeFromCart, subtractFromCart } = useCartStore((state) => state);
 
 
-
-  console.log({cartItems})
-
 	const subtotal =
 		cartItems.reduce(
 			(total, item) => total + item.price * item.quantity,
@@ -57,11 +54,12 @@ export default function CartPage() {
 									>
 										-
 									</Button>
-									<span className="flex items-center justify-center min-w-44">
+									<span className="flex items-center justify-center rounded-none min-w-44">
 										Quantity {item.quantity}
 									</span>
 									<Button
 										variant="outline"
+                    className="rounded-none"
 										disabled={item.quantity >= item.stock}
 										onClick={() => addToCart({ ...item, quantity: 1 })}
 									>
@@ -91,13 +89,13 @@ export default function CartPage() {
 							<Button
 								variant="outline"
 								size="lg"
-								className="w-full text-white bg-blue-700"
+								className="w-full text-white bg-blue-700 rounded-none"
 							>
 								Continue Shopping
 							</Button>
 						</Link>
 						<Link href="/checkout" className="flex-1 max-w-[200px]">
-							<Button size="lg" className="flex-1">
+							<Button size="lg" className="flex-1 rounded-none">
 								Proceed to Checkout
 							</Button>
 						</Link>

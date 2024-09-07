@@ -13,6 +13,8 @@ import type { ProductDetailsType } from "@/schema";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cart-provider";
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
 
 type Props = {
@@ -26,6 +28,16 @@ export default function ProductDetails({product}: Props) {
 
 // check if the product is already in the cart and return the cart item itself
 const cartItem = cartItems.find((item) => item.id === product.id);
+
+const router = useRouter();
+
+const handleAddToCart = () => {
+  startTransition(() => {
+    addToCart({ ...product, quantity: cartItem ? cartItem.quantity + 1 : 1 });
+    router.push("/cart");
+  });
+
+};
 
 
 
@@ -115,7 +127,7 @@ const cartItem = cartItems.find((item) => item.id === product.id);
 							{product.stock} in stock
 						</Badge>
 					</div>
-					<Button type="button" disabled={cartItem && cartItem?.quantity >= product.stock} onClick={() => addToCart({...product, quantity: 1})} size="lg">Add to Cart</Button>
+					<Button className="rounded-none" type="button" disabled={cartItem && cartItem?.quantity >= product.stock} onClick={handleAddToCart} size="lg">Add to Cart</Button>
 				</div>
 			</div>
 		</div>
