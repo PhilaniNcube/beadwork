@@ -147,3 +147,42 @@ export async function getFeaturedProducts() {
 
   return products;
 }
+
+
+export async function getProductsByCategoryId(id:number) {
+  const supabase = createClient();
+
+  // fetch the products from the product_categories table
+  const { data: productCategories, error: productCategoriesError } =
+    await supabase
+      .from("product_categories")
+      .select("product_id, products(id, title, price, slug)")
+      .eq("category_id", id);
+
+  console.log({ productCategories, productCategoriesError });
+
+  if (productCategoriesError) {
+    return [];
+  }
+
+
+
+
+  return productCategories.map((item) => {
+    return {
+      id: item.products?.id,
+      title: item.products?.title,
+      price: item.products?.price,
+      slug: item.products?.slug,
+    };
+  });
+}
+
+
+export type CategoryProductType = {
+  id: number | undefined;
+  title: string | undefined;
+  price: number | undefined;
+  slug: string | undefined;
+  product_images: string[];
+};

@@ -42,6 +42,7 @@ export type Database = {
 						name: string;
 						parent_category_id: number | null;
 						slug: string;
+            image_url: string | null;
 					};
 					Insert: {
 						created_at?: string;
@@ -49,6 +50,7 @@ export type Database = {
 						name: string;
 						parent_category_id?: number | null;
 						slug: string;
+            image_url?: string;
 					};
 					Update: {
 						created_at?: string;
@@ -56,6 +58,7 @@ export type Database = {
 						name?: string;
 						parent_category_id?: number | null;
 						slug?: string;
+            image_url?: string;
 					};
 					Relationships: [
 						{

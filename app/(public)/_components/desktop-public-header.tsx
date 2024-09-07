@@ -5,32 +5,43 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cart-provider";
+import { logOutAction } from "@/utils/actions/auth";
 import type { User } from "@supabase/supabase-js";
-import { ArrowBigLeft, ArrowLeft, Menu, Search, ShoppingBag, ShoppingBagIcon, ShoppingBasket, UserIcon, X } from "lucide-react";
+import {
+  ArrowBigLeft,
+  ArrowLeft,
+  LogOutIcon,
+  Menu,
+  Search,
+  ShoppingBag,
+  ShoppingBagIcon,
+  ShoppingBasket,
+  UserIcon,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-  export const categories = [
-    { name: "Necklaces", slug: "necklaces" },
-    { name: "Earrings", slug: "earrings" },
-    { name: "Bracelets", slug: "bracelets" },
-    { name: "Rings", slug: "rings" },
-    { name: "Anklets", slug: "anklets" },
-    { name: "Hair Accessories", slug: "hair-accessories" },
-  ];
+export const categories = [
+  { name: "Necklaces", slug: "necklaces" },
+  { name: "Earrings", slug: "earrings" },
+  { name: "Bracelets", slug: "bracelets" },
+  { name: "Rings", slug: "rings" },
+  { name: "Anklets", slug: "anklets" },
+  { name: "Hair Accessories", slug: "hair-accessories" },
+];
 
 const DesktopPublicHeader = ({ user }: { user: User | null }) => {
+  console.log(user);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const { products: cartItems, addToCart } = useCartStore((state) => state);
 
-
- const { products: cartItems, addToCart } = useCartStore((state) => state);
-
-	return (
+  return (
     <nav className="hidden bg-white shadow md:block">
       <div className="container px-4 sm:px-6 lg:px-0">
         <div className="flex justify-between h-16">
@@ -78,23 +89,44 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
                 />
               </div>
             </div>
-            <div className="flow-root ml-4">
+            <div className="flex flex-row ml-4">
               <Button variant="ghost" size="icon">
                 <ShoppingBag className="w-6 h-6" aria-hidden="true" />
                 <span className="sr-only">Shopping cart</span>
               </Button>
+
+              {user !== null ? (
+                <>
+                  <Link href="/account">
+                    <Button size="icon" variant="ghost">
+                      <UserIcon
+                        className="w-6 h-6 text-yellow-700"
+                        aria-hidden="true"
+                      />
+                      <span className="sr-only">Account</span>
+                    </Button>
+                  </Link>
+                  <form action={logOutAction}>
+                    <Button type="submit" size="icon" variant="ghost">
+                      <LogOutIcon
+                        className="w-6 h-6 text-red-700"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                  </form>
+                </>
+              ) : (
+                <Link href="/login">
+                  <Button variant="ghost" size="icon">
+                    <UserIcon className="w-6 h-6" aria-hidden="true" />
+                    <span className="sr-only">Login</span>
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
-          <div className="flex items-center -mr-2 sm:hidden">
-            <Button variant="ghost" size="icon" onClick={toggleMenu}>
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? (
-                <X className="block w-6 h-6" aria-hidden="true" />
-              ) : (
-                <Menu className="block w-6 h-6" aria-hidden="true" />
-              )}
-            </Button>
-          </div>
+
+
         </div>
       </div>
     </nav>

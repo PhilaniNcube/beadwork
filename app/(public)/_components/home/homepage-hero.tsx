@@ -2,6 +2,7 @@ import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { Hand, TimerOff, Truck } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Fragment } from "react";
 
 export default function HeroSection() {
@@ -25,12 +26,14 @@ export default function HeroSection() {
             Discover unique, artisanal jewelry pieces that tell your story. Each
             item is lovingly crafted to bring out your inner radiance.
           </p>
-          <Button
-            size="lg"
-            className="px-8 py-3 text-lg bg-white rounded-full text-slate-900 hover:text-white"
-          >
-            Shop Collection
-          </Button>
+          <Link href="/categories">
+            <Button
+              size="lg"
+              className="px-8 py-3 text-lg bg-white rounded-none text-slate-900 hover:text-white"
+            >
+              Shop Collection
+            </Button>
+          </Link>
         </div>
       </section>
       <div className="hidden text-white bg-black md:flex">
