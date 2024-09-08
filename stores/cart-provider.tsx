@@ -1,19 +1,34 @@
 "use client";
 
-import { type ReactNode, createContext, useRef, useContext } from "react";
+import {
+  type ReactNode,
+  createContext,
+  useRef,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { useStore } from "zustand";
-import { type Cart, type CartStore, createCartStore } from "./cart-store";
+import {
+  type Cart,
+  CartProduct,
+  type CartStore,
+  createCartStore,
+} from "./cart-store";
 
 export type CartStoreApi = ReturnType<typeof createCartStore>;
 
-export const CartStoreContext = createContext<CartStoreApi | undefined>(undefined);
+export const CartStoreContext = createContext<CartStoreApi | undefined>(
+  undefined
+);
 
 export interface CartStoreProviderProps {
-  children:ReactNode;
+  children: ReactNode;
 }
 
-export const CartStoreProvider = ({children}: CartStoreProviderProps) => {
+export const CartStoreProvider = ({ children }: CartStoreProviderProps) => {
   const storeRef = useRef<CartStoreApi>();
+
   if (!storeRef.current) {
     storeRef.current = createCartStore();
   }
@@ -25,16 +40,12 @@ export const CartStoreProvider = ({children}: CartStoreProviderProps) => {
   );
 };
 
-export const useCartStore = <T,>(
-  selector: (store:CartStore) => T,
-):T => {
-
- const cartStoreContext = useContext(CartStoreContext);
+export const useCartStore = <T,>(selector: (store: CartStore) => T): T => {
+  const cartStoreContext = useContext(CartStoreContext);
 
   if (!cartStoreContext) {
-    throw new Error('useCart must be used within a CartStoreProvider');
+    throw new Error("useCart must be used within a CartStoreProvider");
   }
 
   return useStore(cartStoreContext, selector);
-
 };
