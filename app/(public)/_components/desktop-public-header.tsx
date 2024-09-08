@@ -46,7 +46,7 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
 
 
   return (
-    <nav className="hidden bg-white shadow md:block">
+    <nav className="hidden bg-white shadow md:block @container">
       <div className="container px-4 sm:px-6 lg:px-0">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -60,7 +60,7 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               />
               <span className="sr-only">GlamJewels</span>
             </Link>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <div className="hidden sm:ml-6 sm:flex sm:space-x-5">
               {categories.map((category) => (
                 <Link
                   key={category.slug}
@@ -72,15 +72,18 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               ))}
             </div>
           </div>
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <div className="w-full max-w-lg lg:max-w-xs">
+          <div className="hidden sm:ml-6 @lg:flex sm:items-center">
+            <div className="w-full max-w-lg lg:max-w-xs ">
               <label htmlFor="search" className="sr-only">
                 Search
               </label>
-              <form className="relative" action={(formData:FormData) => {
-                   const search = formData.get("search");
-                    router.push(`/shop?q=${search}`);
-              }}>
+              <form
+                className="relative"
+                action={(formData: FormData) => {
+                  const search = formData.get("search");
+                  router.push(`/shop?q=${search}`);
+                }}
+              >
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Search
                     className="w-5 h-5 text-gray-400"
@@ -103,7 +106,7 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
                   <em
                     className={cn(
                       "text-sm font-semibold absolute top-1 right-0",
-                      cartItems.length > 0 ? "text-red-600" : "",
+                      cartItems.length > 0 ? "text-red-600" : ""
                     )}
                   >
                     {cartItems.length}

@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="py-8 mt-8 bg-muted">
       <div className="container grid grid-cols-1 gap-4 px-4 mx-auto md:grid-cols-3 md:px-6">
         <div className="flex flex-col items-center md:items-start">
-          <Link href="#" className="flex items-center gap-2" prefetch={false}>
+          <Link href="/" className="flex items-center gap-2" prefetch={false}>
             <Image
               src="https://utfs.io/f/56edb8fd-9cdd-498d-9501-c1e54d015570-n0631b.webp"
               alt="Beadwork"
@@ -28,30 +28,30 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
           <div className="grid gap-1">
             <h3 className="font-semibold">Quick Links</h3>
-            <Link href="#" className="text-sm hover:underline" prefetch={false}>
+            <Link href="/about" className="text-sm hover:underline" prefetch={false}>
               About
             </Link>
-            <Link href="#" className="text-sm hover:underline" prefetch={false}>
+            <Link href="/contact" className="text-sm hover:underline" prefetch={false}>
               Contact
             </Link>
-            <Link href="#" className="text-sm hover:underline" prefetch={false}>
+            <Link href="/privacy" className="text-sm hover:underline" prefetch={false}>
               Privacy Policy
             </Link>
           </div>
           <div className="grid gap-1">
             <h3 className="font-semibold">Customer Service</h3>
-            <Link href="#" className="text-sm hover:underline" prefetch={false}>
+            <Link href="/returns" className="text-sm hover:underline" prefetch={false}>
               Shipping &amp; Returns
             </Link>
-            <Link href="#" className="text-sm hover:underline" prefetch={false}>
+            {/* <Link href="#" className="text-sm hover:underline" prefetch={false}>
               FAQ
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="flex flex-col items-center md:items-end">
           <div className="flex gap-4">
             <Link
-              href="#"
+              href="https://twitter.com"
               className="text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
@@ -59,7 +59,7 @@ export default function Footer() {
               <span className="sr-only">Twitter</span>
             </Link>
             <Link
-              href="#"
+              href="https://facebook.com"
               className="text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
@@ -67,7 +67,7 @@ export default function Footer() {
               <span className="sr-only">Facebook</span>
             </Link>
             <Link
-              href="#"
+              href="https://instagram.com"
               className="text-muted-foreground hover:text-foreground"
               prefetch={false}
             >
