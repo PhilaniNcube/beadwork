@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormState } from "react-dom";
 import { loginAction } from "@/utils/actions/auth";
+import { SubmitButton } from "@/components/submit-button";
 
 export function Login() {
 
@@ -45,7 +46,7 @@ export function Login() {
 								<Label htmlFor="password">Password</Label>
 								<Link
 									href="/forgot-password"
-									className="ml-auto inline-block text-sm underline"
+									className="inline-block ml-auto text-sm underline"
 								>
 									Forgot your password?
 								</Link>
@@ -57,11 +58,11 @@ export function Login() {
 								</small>
 							))}
 						</div>
-						<Button type="submit" className="w-full">
+						<SubmitButton type="submit" className="w-full">
 							Login
-						</Button>
+						</SubmitButton>
 					</form>
-					<div className="mt-4 text-center text-sm">
+					<div className="mt-4 text-sm text-center">
 						Don&apos;t have an account?{" "}
 						<Link href="/sign-up" className="underline">
 							Sign up

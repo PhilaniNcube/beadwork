@@ -30,7 +30,7 @@ const ProductList = async ({products}:Props) => {
       <Container>
         <div className="flex items-start">
 
-          <div className="@container px-0 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-6 px-0 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => (
               <ProductListItem key={product.id} product={product} />
             ))}
