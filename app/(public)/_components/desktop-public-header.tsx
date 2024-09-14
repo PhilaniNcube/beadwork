@@ -100,21 +100,23 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               </form>
             </div>
             <div className="flex flex-row ml-4">
-              <Button variant="ghost" className="relative" size="icon">
-                <ShoppingBag className="w-6 h-6" aria-hidden="true" />
-                {cartItems.length > 0 && (
-                  <em
-                    className={cn(
-                      "text-sm font-semibold absolute top-1 right-0",
-                      cartItems.length > 0 ? "text-red-600" : ""
-                    )}
-                  >
-                    {cartItems.length}
-                  </em>
-                )}
+              <Link href="/cart" prefetch={false}>
+                <Button variant="ghost" className="relative" size="icon">
+                  <ShoppingBag className="w-6 h-6" aria-hidden="true" />
+                  {cartItems.length > 0 && (
+                    <em
+                      className={cn(
+                        "text-sm font-semibold absolute top-1 right-0",
+                        cartItems.length > 0 ? "text-red-600" : ""
+                      )}
+                    >
+                      {cartItems.length}
+                    </em>
+                  )}
 
-                <span className="sr-only">Shopping cart</span>
-              </Button>
+                  <span className="sr-only">Shopping cart</span>
+                </Button>
+              </Link>
 
               {user !== null ? (
                 <>
