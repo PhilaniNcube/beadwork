@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div className="">
      <HomepageHero />
-     <HomepageAbout />
+     {/* <HomepageAbout /> */}
      <FeaturedProducts />
      <HomePageCallToAction />
     </div>
