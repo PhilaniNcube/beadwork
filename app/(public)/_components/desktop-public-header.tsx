@@ -61,15 +61,18 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
               <span className="sr-only">GlamJewels</span>
             </Link>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-5">
-              {categories.map((category) => (
-                <Link
-                  key={category.slug}
-                  href={`/categories/${category.slug}`}
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
-                >
-                  {category.name}
-                </Link>
-              ))}
+              <Link
+                href="/categories/bracelets"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
+              >
+                Bracelets
+              </Link>
+              <Link
+                href="/categories"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
+              >
+                Categories
+              </Link>
             </div>
           </div>
           <div className="hidden sm:ml-6 @lg:flex sm:items-center">
