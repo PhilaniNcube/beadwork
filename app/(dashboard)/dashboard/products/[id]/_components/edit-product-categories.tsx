@@ -63,14 +63,15 @@ const EditProductCategories = ({
         </div>
 			</CardHeader>
 			<CardContent>
-				<div className="flex gap-x-4">
+				<div className="flex flex-wrap gap-x-4">
 					{categories.map((category) => {
 						const isCategorySelected = optimisticProductCategoriesState.some(
 							(productCategory) => productCategory.category_id === category.id,
 						);
 						return (
-							<div key={category.id} className="flex items-center gap-x-2">
+							<div key={category.id} className="flex items-center gap-2">
 								<Badge
+
 									onClick={() => {
 										const formData = new FormData();
 										formData.append("product_id", productId.toString());
@@ -81,7 +82,7 @@ const EditProductCategories = ({
                     });
 									}}
 									className={cn(
-										"py-1 px-2 rounded-full hover:bg-primary/80",
+										"py-1 w-fit  px-2 rounded-full hover:bg-primary/80",
 										isCategorySelected
 											? "bg-green-700 text-white"
 											: "bg-muted text-primary",

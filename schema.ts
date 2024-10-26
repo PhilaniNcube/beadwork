@@ -17,6 +17,12 @@ export const categorySchema = z.object({
 	parent_category_id: z.string().optional(),
 });
 
+export const addCategorySchema = z.object({
+	name: z.string().min(2),
+	parent_category_id: z.string().optional(),
+  image_url: z.string().optional(),
+});
+
 export const materialsSchema = z.object({
 	name: z.string(),
 });

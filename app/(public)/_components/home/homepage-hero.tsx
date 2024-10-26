@@ -10,7 +10,7 @@ export default function HeroSection() {
     <Fragment>
       <section className="relative h-[calc(100vh-15rem)] min-h-[500px] w-full overflow-hidden">
         <Image
-          src="https://utfs.io/f/193069ff-3aa9-4d15-a2f6-9657b8a03a24-uupcoo.jpeg"
+          src="https://utfs.io/f/I8dKBSGAO9kqQd1qMjVUB17I0Kc2RqMGZhJOtf8Lnvpduerg"
           alt="Handmade jewelry collection"
           width={1920}
           height={1080}

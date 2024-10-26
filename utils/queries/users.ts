@@ -26,3 +26,14 @@ export const getUserProfile = cache(async (id:string) => {
 });
 
 
+export async function getAdmin () {
+  const supabase = createClient();
+
+  const {data, error} = await supabase.rpc("is_admin");
+  if(error) {
+    console.error(error);
+    throw new Error("Error getting admin status");
+  }
+
+  return data;
+}

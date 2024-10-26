@@ -47,9 +47,9 @@ const DashboardProducts = async ({
 		<div className="">
 			{productResult && (
 				<ScrollArea className="w-full gap-x-4 h-[650px]">
-					<div className="flex gap-x-4">
+					<div className="flex gap-x-4 ">
 						<EditProduct product={productResult} />
-						<div>
+						<div className="max-w-xl">
 							<ImageUpload
 								productId={productResult.id}
 								images={productImages}

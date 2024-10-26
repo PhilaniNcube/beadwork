@@ -66,7 +66,7 @@ export default function EditProduct({ product }: Props) {
 
 
 	return (
-		<Card className="w-full max-w-4xl">
+		<Card className="w-3/4">
 			<CardHeader>
 				<CardTitle>Edit Product</CardTitle>
 				<CardDescription>
@@ -157,12 +157,12 @@ export default function EditProduct({ product }: Props) {
 									)}
 								/>
 							</div>
-							<div className="grid gap-2">
+							<div className="grid col-span-2 gap-2">
 								<FormField
 									control={form.control}
 									name="is_featured"
 									render={({ field }) => (
-										<FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
+										<FormItem className="flex flex-row items-center justify-between col-span-2 p-4 border rounded-lg">
 											<div className="space-y-0.5">
 												<FormLabel className="text-base">Featured</FormLabel>
 												<FormDescription>

@@ -61,13 +61,13 @@ const EditProductMaterials = ({
 				</div>
 			</CardHeader>
 			<CardContent>
-				<div className="flex gap-x-4">
+				<div className="flex flex-wrap gap-4">
 					{materials.map((material) => {
 						const isMaterialSelected = optimisticProductMaterialsState.some(
 							(productMaterial) => productMaterial.material_id === material.id,
 						);
 						return (
-							<div key={material.id} className="flex items-center gap-x-2">
+							<div key={material.id} className="flex flex-wrap items-center gap-2">
 								<Badge
 									onClick={() => {
 										const formData = new FormData();
@@ -79,7 +79,7 @@ const EditProductMaterials = ({
 										});
 									}}
 									className={cn(
-										"py-1 px-2 rounded-full hover:bg-primary/80",
+										"py-1 px-2 rounded-full w-fit hover:bg-primary/80",
 										isMaterialSelected
 											? "bg-green-700 text-white"
 											: "bg-muted text-primary",

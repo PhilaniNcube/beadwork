@@ -45,7 +45,7 @@ export default function ImageUpload({ productId, images }: Props) {
 				<UploadButton
 					className="flex flex-row items-center justify-center px-3 mx-0 text-white bg-blue-500 rounded-lg w-fit"
 					endpoint="imageUploader"
-					onClientUploadComplete={(res) => {
+					onClientUploadComplete={(res:any) => {
 
 						const formData = new FormData();
 						formData.append("productId", productId.toString());
