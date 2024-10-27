@@ -103,6 +103,9 @@ export async function updateProductCategoryAction(prevState:unknown, formData:Fo
   // get the category id from the formData as either
   const category_id = Number(formData.get("category_id")) ;
 
+  // get the image url from the formData
+
+
 
   // check if the category is already assigned to the product
   const {data: existingCategory, error: existingCategoryError} = await supabase.from("product_categories").select("*").eq("product_id", product_id).eq("category_id", category_id).single();
@@ -123,7 +126,8 @@ export async function updateProductCategoryAction(prevState:unknown, formData:Fo
   const {data, error} = await supabase.from("product_categories").insert([
     {
       product_id,
-      category_id
+      category_id,
+
     }
   ]).select("*");
 
@@ -165,4 +169,56 @@ export async function deleteCategoryAction(prevState:unknown, formData:FormData)
   revalidatePath("/products");
 
   return {status: 200};
+}
+
+
+export async function updateCategoryAction(prevState:unknown, formData:FormData){
+  const supabase = createClient();
+
+  // check if the usert is an admin
+
+  const isAdmin = await getAdmin();
+
+  console.log(isAdmin);
+
+  if(!isAdmin){
+    return {error: "You are not authorized to perform this action", status: 401};
+  }
+
+  const category_id = Number(formData.get("id"));
+  console.log({category_id});
+
+  const validatedFields = addCategorySchema.safeParse({
+    name: formData.get("name") as string,
+    parent_category_id: formData.get("parent_category_id") as string || null,
+    image_url: formData.get("image_url") as string
+  })
+
+  if(!validatedFields.success){
+    return {errors: validatedFields.error.flatten().fieldErrors, status: 400};
+  }
+  console.log(validatedFields.data);
+
+
+
+
+  const {data, error} = await supabase.from("categories").update({
+    name: validatedFields.data.name,
+    image_url: validatedFields.data.image_url,
+    parent_category_id: Number(validatedFields.data.parent_category_id) || null
+  }).eq("id", category_id).select("*");
+
+  console.log({data, error});
+
+  if(error){
+    return {error: error.message, status: 400};
+  }
+
+  revalidatePath("/", "layout");
+  revalidatePath("/dashboard", "layout");
+  revalidatePath("/dashboard/categories");
+  revalidatePath("/dashboard/products/create");
+  revalidatePath("/products");
+
+  return {data, status: 200};
 }
