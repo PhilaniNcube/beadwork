@@ -63,7 +63,7 @@ const EditProductCategories = ({
         </div>
 			</CardHeader>
 			<CardContent>
-				<div className="flex flex-wrap gap-x-4">
+				<div className="flex flex-wrap gap-2">
 					{categories.map((category) => {
 						const isCategorySelected = optimisticProductCategoriesState.some(
 							(productCategory) => productCategory.category_id === category.id,

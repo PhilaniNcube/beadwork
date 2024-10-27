@@ -1,5 +1,6 @@
 "use client";
 
+import CategoryImageUploader from "@/components/category-image-uploader";
 import { SubmitButton } from "@/components/submit-button";
 import { Button } from "@/components/ui/button";
 import { CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +31,8 @@ const AddCategory = ({
 }) => {
   const [categoryState, categoryAction] = useFormState(addCategoryAction, null);
   const [open, setOpen] = useState(false);
+
+  const [categoryUrl, setCategoryUrl] = useState<string>("");
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -63,6 +66,15 @@ const AddCategory = ({
               ))}
             </SelectContent>
           </Select>
+          <CategoryImageUploader setCategoryUrl={setCategoryUrl} />
+          <Input
+            name="image_url"
+            placeholder="Category URL"
+            required
+            type="hidden"
+            value={categoryUrl}
+            className="mb-1"
+          />
 
           <SubmitButton
             type="submit"

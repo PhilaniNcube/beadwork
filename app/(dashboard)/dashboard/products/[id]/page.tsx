@@ -7,6 +7,7 @@ import ImageUpload from "./_components/image-upload";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditProductCategories from "./_components/edit-product-categories";
 import EditProductMaterials from "./_components/edit-product-materials";
+import ProductImageUploader from "@/components/product-image-uploader";
 
 const DashboardProducts = async ({
 	params: { id },
@@ -44,35 +45,43 @@ const DashboardProducts = async ({
 
 
 	return (
-		<div className="">
-			{productResult && (
-				<ScrollArea className="w-full gap-x-4 h-[650px]">
-					<div className="flex gap-x-4 ">
-						<EditProduct product={productResult} />
-						<div className="max-w-xl">
-							<ImageUpload
-								productId={productResult.id}
-								images={productImages}
-							/>
-							{categories && productCategories && (
-								<EditProductCategories
-									productId={productResult.id}
-									categories={categories}
-									productCategories={productCategories}
-								/>
-							)}
-							{materials && productMaterials && (
-								<EditProductMaterials
-									productId={productResult.id}
-									materials={materials}
-									productMaterials={productMaterials}
-								/>
-							)}
-						</div>
-					</div>
-				</ScrollArea>
-			)}
-		</div>
-	);
+    <div className="">
+      {productResult && (
+        <ScrollArea className="w-full gap-x-4 h-[650px]">
+          <div className="flex gap-x-4 ">
+            <EditProduct product={productResult} />
+            <div className="max-w-xl">
+              <ProductImageUploader productId={productResult.id}  />
+              <div className="grid grid-cols-5 gap-2 mt-2">
+                {productImages.map((image) => (
+                  <img
+                    key={image.id}
+                    src={image.image_url}
+                    alt="Image"
+                    className="object-cover w-full aspect-square"
+                  />
+                ))}
+              </div>
+
+              {categories && productCategories && (
+                <EditProductCategories
+                  productId={productResult.id}
+                  categories={categories}
+                  productCategories={productCategories}
+                />
+              )}
+              {materials && productMaterials && (
+                <EditProductMaterials
+                  productId={productResult.id}
+                  materials={materials}
+                  productMaterials={productMaterials}
+                />
+              )}
+            </div>
+          </div>
+        </ScrollArea>
+      )}
+    </div>
+  );
 };
 export default DashboardProducts;

@@ -52,10 +52,10 @@ export async function addCategoryAction(prevState:unknown, formData:FormData){
   const supabase = createClient();
 
 
-  const validatedFields = categorySchema.safeParse({
+  const validatedFields = addCategorySchema.safeParse({
     name: formData.get("name") as string,
     parent_category_id: formData.get("parent_category_id") as string,
-
+    image_url: formData.get("image_url") as string,
   });
 
 
@@ -73,7 +73,7 @@ export async function addCategoryAction(prevState:unknown, formData:FormData){
       slug,
       name: validatedFields.data.name,
       parent_category_id: Number(validatedFields.data.parent_category_id),
-
+      image_url: validatedFields.data.image_url
     }
   ]).select("*");
 

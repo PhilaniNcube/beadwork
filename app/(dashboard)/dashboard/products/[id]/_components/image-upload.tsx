@@ -47,18 +47,19 @@ export default function ImageUpload({ productId, images }: Props) {
 					endpoint="imageUploader"
 					onClientUploadComplete={(res:any) => {
 
-						const formData = new FormData();
-						formData.append("productId", productId.toString());
-						formData.append("image", res[0].url);
-						startTransition(() => {
-							formAction(formData);
-						});
+						// const formData = new FormData();
+						// formData.append("productId", productId.toString());
+						// formData.append("image", res[0].url);
+						// startTransition(() => {
+						// 	formAction(formData);
+						// });
 
 
 					}}
 					onUploadError={(error: Error) => {
 						// Do something with the error.
-						alert(`ERROR! ${error.message}`);
+            console.log(error);
+
 					}}
 				/>
 				<div className="grid grid-cols-2 gap-3 mt-4">
