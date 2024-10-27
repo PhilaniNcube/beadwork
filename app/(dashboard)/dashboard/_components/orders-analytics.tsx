@@ -1,12 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Database } from "@/supabase";
 import { formatCurrency } from "@/utils/formatCurrency";
 import {
+  getOrders,
   getOrdersByStatus,
   getTotalOrders,
   getTotalOrderValue,
 } from "@/utils/queries/orders";
 import { DollarSign, ShoppingCart } from "lucide-react";
+import OrdersPage from "../orders/_components/orders-page";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const OrdersAnalytics = async () => {
   const totalOrdersData = getTotalOrders();
@@ -14,6 +18,7 @@ const OrdersAnalytics = async () => {
   const totalProcessingOrdersData = getOrdersByStatus("PROCESSING");
   const totalShippedOrdersData = getOrdersByStatus("SHIPPED");
   const totalPendingOrdersData = getOrdersByStatus("PENDING");
+  const ordersData = await getOrders();
 
   const [
     totalOrdersResult,
@@ -21,20 +26,16 @@ const OrdersAnalytics = async () => {
     totalProcessingOrders,
     totalShippedOrders,
     totalPendingOrders,
+    orders
   ] = await Promise.all([
     totalOrdersData,
     totalValueData,
     totalProcessingOrdersData,
     totalShippedOrdersData,
     totalPendingOrdersData,
+    ordersData
   ]);
-  console.log({
-    totalOrdersResult,
-    totalValue,
-    totalProcessingOrders,
-    totalShippedOrders,
-    totalPendingOrders,
-  });
+
 
   // write a function to sum the total value of orders and return the value
   const sumTotalValue = (orders:{id:string, total_amount:number}[]) => {
@@ -44,6 +45,8 @@ const OrdersAnalytics = async () => {
   let processingOrders = totalProcessingOrders.data || []
   let shippedOrders = totalShippedOrders.data || []
   let pendingOrders = totalPendingOrders.data || []
+
+
 
   return (
     <div className="container mx-auto p-4">
@@ -116,6 +119,13 @@ const OrdersAnalytics = async () => {
             </CardContent>
           </Card>
         )}
+      </div>
+      <Separator />
+      <div>
+       {/* Orders Table */}
+       {orders.data && orders.data.length > 0 && (
+        <OrdersPage orders={orders.data} />
+       )}
       </div>
     </div>
   );

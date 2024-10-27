@@ -48,7 +48,7 @@ export default function OrdersPage({orders}:{orders:Database['public']['Tables']
   );
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="py-6 mx-auto">
       <header className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Orders</h1>
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">

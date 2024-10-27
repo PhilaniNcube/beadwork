@@ -95,13 +95,7 @@ export default function Dashboard({children}:{children:ReactNode}) {
                 <Users className="w-4 h-4" />
                 Customers
               </Link>
-              <Link
-                href="/dashboard/analytics"
-                className="flex items-center gap-3 px-3 py-2 transition-all rounded-lg text-muted-foreground hover:text-primary"
-              >
-                <LineChart className="w-4 h-4" />
-                Analytics
-              </Link>
+
             </nav>
           </div>
         </div>
@@ -163,13 +157,7 @@ export default function Dashboard({children}:{children:ReactNode}) {
                   <Users className="w-5 h-5" />
                   Customers
                 </Link>
-                <Link
-                  href="/dashboard/analytics"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="w-5 h-5" />
-                  Analytics
-                </Link>
+
               </nav>
             </SheetContent>
           </Sheet>
@@ -202,9 +190,9 @@ export default function Dashboard({children}:{children:ReactNode}) {
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        <main className="flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6">
+        <div className="flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6">
           {children}
-        </main>
+        </div>
       </div>
     </div>
   );
