@@ -7,6 +7,31 @@ export type Json =
   | Json[];
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+          extensions?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       admins: {
@@ -25,15 +50,7 @@ export type Database = {
           id?: string;
           user_id?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "admins_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        Relationships: [];
       };
       categories: {
         Row: {
@@ -119,6 +136,13 @@ export type Database = {
             foreignKeyName: "order_items_product_id_fkey";
             columns: ["product_id"];
             isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "products";
             referencedColumns: ["id"];
           }
@@ -171,13 +195,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "shipping_addresses";
             referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "orders_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
           }
         ];
       };
@@ -201,6 +218,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "categories";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_categories_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
           },
           {
             foreignKeyName: "product_categories_product_id_fkey";
@@ -238,6 +262,13 @@ export type Database = {
             foreignKeyName: "product_images_product_id_fkey";
             columns: ["product_id"];
             isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "product_images_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
             referencedRelation: "products";
             referencedColumns: ["id"];
           }
@@ -263,6 +294,13 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "materials";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "product_materials_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
           },
           {
             foreignKeyName: "product_materials_product_id_fkey";
@@ -328,15 +366,7 @@ export type Database = {
           last_name?: string;
           updated_at?: string | null;
         };
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey";
-            columns: ["id"];
-            isOneToOne: true;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        Relationships: [];
       };
       reviews: {
         Row: {
@@ -364,6 +394,13 @@ export type Database = {
           rating?: number;
         };
         Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
+          },
           {
             foreignKeyName: "reviews_product_id_fkey";
             columns: ["product_id"];
@@ -405,21 +442,43 @@ export type Database = {
           street_address?: string;
           user_id?: string;
         };
-        Relationships: [
-          {
-            foreignKeyName: "shipping_addresses_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
+        Relationships: [];
       };
     };
     Views: {
-      [_ in never]: never;
+      product_details: {
+        Row: {
+          price: number | null;
+          product_category: string | null;
+          product_id: number | null;
+          product_images: string[] | null;
+          product_slug: string | null;
+          stock: number | null;
+          title: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
+      get_order_item_count_and_value: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          order_item_id: string;
+          item_count: number;
+          total_value: number;
+        }[];
+      };
+      get_total_order_value: {
+        Args: Record<PropertyKey, never>;
+        Returns: number;
+      };
+      get_total_order_value_by_status: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          status: Database["public"]["Enums"]["status"];
+          total_value: number;
+        }[];
+      };
       is_admin: {
         Args: Record<PropertyKey, never>;
         Returns: boolean;
@@ -549,4 +608,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
   ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+  : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database;
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+  ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
   : never;
