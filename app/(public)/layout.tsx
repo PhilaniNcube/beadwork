@@ -1,6 +1,8 @@
 import { CartStoreProvider } from "@/stores/cart-provider";
 import Footer from "./_components/footer";
 import PublicHeader from "./_components/public-header";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
@@ -21,7 +23,11 @@ export default function PublicLayout({
 	return (
 		<div className="grid grid-rows-[auto_1fr_auto] min-h-[100dvh]">
 			<CartStoreProvider>
-				<PublicHeader />
+        <Suspense fallback={<div className="flex items-center">
+          <Skeleton className="w-24 h-10 animate-pulse" />
+        </div>}>
+				  <PublicHeader />
+        </Suspense>
 				<main className="">{children}</main>
 				<Footer />
 			</CartStoreProvider>

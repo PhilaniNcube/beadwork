@@ -48,3 +48,16 @@ export async function getProductCategoriesByProductId(id:number) {
 
   return data;
 }
+
+
+export async function getChildCategories() {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("categories").select("*").not("parent_category_id", "is", null);
+
+  if (error) {
+    return { error: error.message, status: 400 };
+  }
+
+  return { data, status: 200 };
+}

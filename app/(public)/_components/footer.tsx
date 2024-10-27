@@ -14,12 +14,13 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start">
           <Link href="/" className="flex items-center gap-2" prefetch={false}>
             <Image
-              src="https://utfs.io/f/56edb8fd-9cdd-498d-9501-c1e54d015570-n0631b.webp"
-              alt="Beadwork"
-              width={60}
-              height={31}
+              src="https://uijjfslwyuylxchlehlc.supabase.co/storage/v1/object/public/images/glambeads-new-logo.jpg"
+              alt="Glambeads"
+              width={600}
+              height={600}
+              className="object-cover w-36 aspect-square"
             />
-            <span className="text-lg font-semibold">Beadwork</span>
+
           </Link>
           <p className="mt-2 text-sm text-muted-foreground">
             Quality handcrated beadwork jewellery
@@ -28,19 +29,35 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
           <div className="grid gap-1">
             <h3 className="font-semibold">Quick Links</h3>
-            <Link href="/about" className="text-sm hover:underline" prefetch={false}>
+            <Link
+              href="/about"
+              className="text-sm hover:underline"
+              prefetch={false}
+            >
               About
             </Link>
-            <Link href="/contact" className="text-sm hover:underline" prefetch={false}>
+            <Link
+              href="/contact"
+              className="text-sm hover:underline"
+              prefetch={false}
+            >
               Contact
             </Link>
-            <Link href="/privacy" className="text-sm hover:underline" prefetch={false}>
+            <Link
+              href="/privacy"
+              className="text-sm hover:underline"
+              prefetch={false}
+            >
               Privacy Policy
             </Link>
           </div>
           <div className="grid gap-1">
             <h3 className="font-semibold">Customer Service</h3>
-            <Link href="/returns" className="text-sm hover:underline" prefetch={false}>
+            <Link
+              href="/returns"
+              className="text-sm hover:underline"
+              prefetch={false}
+            >
               Shipping &amp; Returns
             </Link>
             {/* <Link href="#" className="text-sm hover:underline" prefetch={false}>
@@ -76,7 +93,7 @@ export default function Footer() {
             </Link>
           </div>
           <p className="mt-4 text-sm text-muted-foreground">
-            &copy; 2024 Beadwork. All rights reserved.
+            &copy; 2024 Glambeads. All rights reserved.
           </p>
         </div>
       </div>

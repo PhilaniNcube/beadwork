@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cart-provider";
+import { Database } from "@/supabase";
 import { logOutAction } from "@/utils/actions/auth";
 import type { User } from "@supabase/supabase-js";
 import {
@@ -33,7 +34,7 @@ export const categories = [
   { name: "Hair Accessories", slug: "hair-accessories" },
 ];
 
-const DesktopPublicHeader = ({ user }: { user: User | null }) => {
+const DesktopPublicHeader = ({ user, categories }: { user: User | null, categories: Database['public']['Tables']['categories']['Row'][] }) => {
   console.log(user);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -52,27 +53,24 @@ const DesktopPublicHeader = ({ user }: { user: User | null }) => {
           <div className="flex">
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
-                src="https://utfs.io/f/56edb8fd-9cdd-498d-9501-c1e54d015570-n0631b.webp"
-                alt="GlamJewels"
-                width={600}
-                height={312}
-                className="object-cover w-24"
+                src="https://uijjfslwyuylxchlehlc.supabase.co/storage/v1/object/public/images/glambeads-new-logo.jpg"
+                alt="Glambeads"
+                width={652}
+                height={122}
+                className="object-cover w-16 aspect-square"
               />
-              <span className="sr-only">GlamJewels</span>
+              <span className="sr-only">Glambeads</span>
             </Link>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-5">
-              <Link
-                href="/categories/bracelets"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
-              >
-                Bracelets
-              </Link>
-              <Link
-                href="/categories"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
-              >
-                Categories
-              </Link>
+              {categories.map((category, index) => (
+                <Link
+                  key={category.id}
+                  href={`/categories/${category.slug}`}
+                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
+                >
+                  {category.name}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="hidden sm:ml-6 @lg:flex sm:items-center">

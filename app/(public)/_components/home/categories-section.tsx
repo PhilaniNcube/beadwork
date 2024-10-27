@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { getCategories } from "@/utils/queries/categories";
+import { getChildCategories} from "@/utils/queries/categories";
 import Link from "next/link";
 
 const CategoriesSection = async () => {
 
-    const { error, status, data: categories } = await getCategories();
+    const { status, data: categories } = await getChildCategories();
 
   return (
     <div className="container px-4 py-8 mx-auto">

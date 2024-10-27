@@ -2,17 +2,21 @@ import Container from "@/components/container";
 import DesktopPublicHeader from "./desktop-public-header";
 import { getCurrentUser } from "@/utils/queries/users";
 import MobilePublicHeader from "./mobile-public-header";
-import { getCategories } from "@/utils/queries/categories";
+import { getCategories, getChildCategories } from "@/utils/queries/categories";
 
 const PublicHeader = async () => {
 
   const userData =  getCurrentUser();
-  const categoryData = getCategories();
+  const categoryData = getChildCategories();
 
-  const [user] = await Promise.all([userData]);
+  const [user, categoryResult] = await Promise.all([userData, categoryData]);
+
+  const { data: categories } = categoryResult;
+
+
 
   return <header className="text-black">
-   <DesktopPublicHeader user={user} />
+   <DesktopPublicHeader user={user} categories={categories || []} />
    <MobilePublicHeader user={user} />
   </header>;
 };
