@@ -35,7 +35,7 @@ const UpdateCategory = ({
   return (
     <Card className="p-4 max-w-5xl">
       <CardHeader>
-        <CardTitle>Create Category</CardTitle>
+        <CardTitle>Update Category</CardTitle>
       </CardHeader>
       <form action={categoryAction} className="flex-col gap-y-3">
         <Input name="id" type="hidden" value={String(category.id)} />
