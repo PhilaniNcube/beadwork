@@ -25,21 +25,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export const categories = [
-  { name: "Necklaces", slug: "necklaces" },
-  { name: "Earrings", slug: "earrings" },
-  { name: "Bracelets", slug: "bracelets" },
-  { name: "Rings", slug: "rings" },
-  { name: "Anklets", slug: "anklets" },
-  { name: "Hair Accessories", slug: "hair-accessories" },
-];
+// export const categories = [
+//   { name: "Necklaces", slug: "necklaces" },
+//   { name: "Earrings", slug: "earrings" },
+//   { name: "Bracelets", slug: "bracelets" },
+//   { name: "Rings", slug: "rings" },
+//   { name: "Anklets", slug: "anklets" },
+//   { name: "Hair Accessories", slug: "hair-accessories" },
+// ];
 
 const DesktopPublicHeader = ({ user, categories }: { user: User | null, categories: Database['public']['Tables']['categories']['Row'][] }) => {
-  console.log(user);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
   const { products: cartItems, addToCart } = useCartStore((state) => state);
 
   const router = useRouter();
@@ -66,7 +62,7 @@ const DesktopPublicHeader = ({ user, categories }: { user: User | null, categori
                 <Link
                   key={category.id}
                   href={`/categories/${category.slug}`}
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:border-primary hover:text-primary"
+                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent md:text-lg hover:border-primary hover:text-primary"
                 >
                   {category.name}
                 </Link>
