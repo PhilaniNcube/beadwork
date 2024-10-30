@@ -1,14 +1,18 @@
 import { getProductDetails } from "@/utils/queries/products";
 import ProductDetails from "./_components/product-details";
+import Product from "./_components/product";
+import { Suspense } from "react";
+import ProductDetailSkeleton from "./_components/product-detail-skeleton";
 
-const ProductPage = async  ({params:{slug}}:{params:{slug:string}}) => {
-
-   const {product, error} = await getProductDetails(slug);
-
-   if(error){
-     return <div className="container py-8">Could not retrieve product data</div>
-   }
-
-  return <div>{product !== null && <ProductDetails product={product} />}</div>;
+const ProductPage = async ({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) => {
+  return (
+    <Suspense fallback={<ProductDetailSkeleton />}>
+      <Product slug={slug} />
+    </Suspense>
+  );
 };
 export default ProductPage;
