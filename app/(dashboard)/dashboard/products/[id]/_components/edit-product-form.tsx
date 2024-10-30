@@ -66,7 +66,7 @@ export default function EditProduct({ product }: Props) {
 
 
 	return (
-		<Card className="w-3/4">
+		<Card className="flex-1 w-full">
 			<CardHeader>
 				<CardTitle>Edit Product</CardTitle>
 				<CardDescription>

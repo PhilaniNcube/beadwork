@@ -24,7 +24,7 @@ const categories = [
 ];
 
 const MobilePublicHeader = ({ user }: { user: User | null }) => {
-  const { products: cartItems, addToCart } = useCartStore((state) => state);
+  const { products: cartItems } = useCartStore((state) => state);
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -444,6 +444,42 @@ export type Database = {
         };
         Relationships: [];
       };
+      sizes: {
+        Row: {
+          dimensions: string | null;
+          id: number;
+          name: string;
+          product_id: number | null;
+        };
+        Insert: {
+          dimensions?: string | null;
+          id?: number;
+          name: string;
+          product_id?: number | null;
+        };
+        Update: {
+          dimensions?: string | null;
+          id?: number;
+          name?: string;
+          product_id?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "sizes_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "product_details";
+            referencedColumns: ["product_id"];
+          },
+          {
+            foreignKeyName: "sizes_product_id_fkey";
+            columns: ["product_id"];
+            isOneToOne: false;
+            referencedRelation: "products";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
     };
     Views: {
       product_details: {

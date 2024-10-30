@@ -36,7 +36,7 @@ import { useState } from "react";
 
 const DesktopPublicHeader = ({ user, categories }: { user: User | null, categories: Database['public']['Tables']['categories']['Row'][] }) => {
 
-  const { products: cartItems, addToCart } = useCartStore((state) => state);
+  const { products: cartItems } = useCartStore((state) => state);
 
   const router = useRouter();
 

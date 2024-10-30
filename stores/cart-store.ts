@@ -5,6 +5,7 @@ import type { ProductDetailsType } from '@/schema';
 
 export type CartProduct = ProductDetailsType & {
 	quantity: number;
+  size?: string;
 };
 
 export type Cart = {
@@ -33,7 +34,6 @@ export const defaultInitState: Cart = {
 
 const cart:Cart = {
   products:  [],
-
 }
 
 export const getCart = async (): Promise<Cart> => {
@@ -46,14 +46,13 @@ export const createCartStore = (initState: Cart = cart) =>
     addToCart: (product: CartProduct) =>
       set((state) => {
         const productIndex = state.products.findIndex(
-          (p) => p.id === product.id
+          (p) => p.id === product.id && p.size === product.size
         );
         if (productIndex === -1) {
           return {
             ...state,
             products: [...state.products, { ...product, quantity: 1 }],
           };
-          // biome-ignore lint/style/noUselessElse: <explanation>
         } else {
           const updatedProducts = state.products.map((p, index) =>
             index === productIndex ? { ...p, quantity: p.quantity + 1 } : p
@@ -67,7 +66,7 @@ export const createCartStore = (initState: Cart = cart) =>
     subtractFromCart: (product: CartProduct) =>
       set((state) => ({
         products: state.products.map((p) => {
-          if (p.id === product.id) {
+          if (p.id === product.id && p.size === product.size) {
             p.quantity -= 1;
           }
           return p;
@@ -75,9 +74,11 @@ export const createCartStore = (initState: Cart = cart) =>
       })),
     removeFromCart: (product: CartProduct) =>
       set((state) => ({
-        products: state.products.filter((p) => p.id !== product.id),
+        products: state.products.filter(
+          (p) => !(p.id === product.id && p.size === product.size)
+        ),
       })),
-    clearCart: () => set((state) => ({ products: [] })),
+    clearCart: () => set(() => ({ products: [] })),
   }));
 
 

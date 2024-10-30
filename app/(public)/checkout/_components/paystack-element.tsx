@@ -19,9 +19,6 @@ import { useFormState } from "react-dom";
 const PayStackElements = ({ user }: { user: User | null }) => {
 	const {
 		products: cartItems,
-		addToCart,
-		removeFromCart,
-		subtractFromCart,
 	} = useCartStore((state) => state);
 
 	const subtotal =

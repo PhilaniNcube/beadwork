@@ -22,9 +22,6 @@ import PayStackElements from "./paystack-element";
 export default function Checkout({ user }: { user: User | null }) {
 	const {
 		products: cartItems,
-		addToCart,
-		removeFromCart,
-		subtractFromCart,
 	} = useCartStore((state) => state);
 
 	const subtotal =

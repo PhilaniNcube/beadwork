@@ -4,7 +4,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { getProductImages } from "@/utils/queries/products";
 import Image from "next/image";
 import Link from "next/link";
-import { format } from "path";
+
 
 const CategoryProduct = async ({
   product,
