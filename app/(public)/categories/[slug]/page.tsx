@@ -2,6 +2,7 @@ import Container from "@/components/container";
 import { getCategoryBySlug } from "@/utils/queries/categories";
 import { getProductsByCategoryId } from "@/utils/queries/products";
 import CategoryProduct from "./_components/category-product";
+import Image from "next/image";
 
 const CategoryPage = async ({
   params: { slug },
@@ -22,16 +23,14 @@ const CategoryPage = async ({
         <div className="flex flex-col">
           <div className="flex flex-col justify-center">
             <div className="relative">
-              <img
-                className="hidden object-cover w-full sm:block h-80"
+              <Image
+                width={1920}
+                height={1080}
+                className="object-cover w-full h-80"
                 src={category.data.image_url!}
                 alt="sofa"
               />
-              <img
-                className="object-cover w-full h-64 sm:hidden"
-                src={category.data.image_url!}
-                alt="sofa"
-              />
+
               <div className="absolute flex items-start justify-start pr-10 sm:bottom-8 bottom-4 sm:pr-0 left-4 sm:left-8">
                 <p className="text-3xl font-semibold leading-9 text-white sm:text-4xl">
                   {category.data.name}

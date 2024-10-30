@@ -2,6 +2,7 @@ import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { getProductImages } from "@/utils/queries/products";
+import Image from "next/image";
 import Link from "next/link";
 import { format } from "path";
 
@@ -24,10 +25,12 @@ const CategoryProduct = async ({
       prefetch={false}
     >
       <div className="relative flex items-center justify-center transition duration-500 group-hover:bg-opacity-60 bg-gray-50">
-        <img
+        <Image
+          width={600}
+          height={600}
           className="transition duration-500 group-hover:opacity-60"
           src={images[0].image_url}
-          alt={product.title}
+          alt={product.title!}
         />
         <div className="inset-0 items-end hidden w-full px-3 py-2 transition-all duration-200 group-hover:flex group-hover:absolute">
           <Link
