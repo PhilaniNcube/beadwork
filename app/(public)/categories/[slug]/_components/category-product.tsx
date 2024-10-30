@@ -25,13 +25,20 @@ const CategoryProduct = async ({
       prefetch={false}
     >
       <div className="relative flex items-center justify-center transition duration-500 group-hover:bg-opacity-60 bg-gray-50">
-        <Image
-          width={600}
-          height={600}
-          className="transition duration-500 group-hover:opacity-60"
-          src={images[0].image_url}
-          alt={product.title!}
-        />
+        {images === undefined || images.length === 0 ? (
+          <div className="flex items-center justify-center w-full aspect-square bg-slate-200">
+            Image not found
+          </div>
+        ) : (
+          <Image
+            width={600}
+            height={600}
+            className="transition duration-500 group-hover:opacity-60"
+            src={images[0].image_url}
+            alt={product.title!}
+          />
+        )}
+
         <div className="inset-0 items-end hidden w-full px-3 py-2 transition-all duration-200 group-hover:flex group-hover:absolute">
           <Link
             href={`/products/${product.slug}`}
