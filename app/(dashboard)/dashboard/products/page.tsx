@@ -31,33 +31,37 @@ const DashboardProductsPage = async (props: {searchParams: Promise<{page: string
     const maxPages = count ? Math.ceil(count / 10) : 1;
 
     return (
-              <div className="">
-                  <Card>
-                      <CardHeader className="relative isolate">
-                          <CardTitle>Products</CardTitle>
-                          <CardDescription>
-                              Manage your products and view their sales performance.
-                          </CardDescription>
-                          <Link
-                              href="/dashboard/products/create"
-                              className="absolute top-1 right-2"
-                          >
-                              <Button>
-                                  {" "}
-                                  <PlusIcon className="mr-2" /> Create Product
-                              </Button>
-                          </Link>
-                      </CardHeader>
-                  </Card>
-                  <ScrollArea className="h-[500px] mt-3">
-            {count && products &&
-                      <ProductsTable count={count} products={products} />
-            }
-            {count &&
-            <PaginationComponent count={count} maxPages={maxPages} page={pageValue} href="/dashboard/products" />
-            }
-                  </ScrollArea>
-              </div>
-          );
+      <div className="">
+        <Card className="mb-3">
+          <CardHeader className="relative isolate">
+            <CardTitle>Products</CardTitle>
+            <CardDescription>
+              Manage your products and view their sales performance.
+            </CardDescription>
+            <Link
+              href="/dashboard/products/create"
+              className="absolute top-1 right-2"
+            >
+              <Button>
+                {" "}
+                <PlusIcon className="mr-2" /> Create Product
+              </Button>
+            </Link>
+          </CardHeader>
+        </Card>
+        {count && products && (
+          <ProductsTable count={count} products={products} />
+        )}
+        {count && (
+          <PaginationComponent
+            count={count}
+            maxPages={maxPages}
+            page={pageValue}
+            href="/dashboard/products"
+          />
+        )}
+
+      </div>
+    );
 };
 export default DashboardProductsPage;
