@@ -11,6 +11,7 @@ const FeaturedProducts = async () => {
 	return (
 		<section className="mt-8">
 			<Container>
+        <h2 className="text-2xl font-bold text-center text-slate-950">Featured Products</h2>
 				<div className="@container px-0">
 					<div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4">
 						{products.map((product) => (

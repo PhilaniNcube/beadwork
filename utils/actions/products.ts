@@ -5,6 +5,8 @@ import { createClient } from "../supabase/server";
 import slugify from "slugify";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import "server-only"
+import { getAdmin } from "../queries/users";
 
 export async function createProductAction(
 	prevState: unknown,
@@ -141,6 +143,35 @@ export async function editProductAction(
 
   return { status: 200, message: "Product created successfully" };
 
+}
 
+
+export async function deleteProductAction(productId:number) {
+
+  const supabase = createClient();
+
+  const isAdmin = await getAdmin();
+
+  if(!isAdmin) {
+    return { status: 401, message: "Unauthorized" };
+  }
+
+  const { data, error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId)
+    .single();
+
+    console.log({data, error});
+
+  if (error) {
+    return { error: error.details, status: 500, message: error.message };
+  }
+
+  revalidatePath("/products");
+  revalidatePath("/dashboard", "layout");
+  revalidatePath("/dashboard/products/", "layout");
+
+  return { status: 200, message: "Product deleted successfully" };
 
 }

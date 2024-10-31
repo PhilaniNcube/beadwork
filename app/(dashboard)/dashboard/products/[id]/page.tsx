@@ -7,16 +7,13 @@ import {
   getProductMaterialsByProductId,
 } from "@/utils/queries/materials";
 import { getProductByID, getProductImages } from "@/utils/queries/products";
-import { UploadButton } from "@/utils/uploadthing";
 import EditProduct from "./_components/edit-product-form";
-import ImageUpload from "./_components/image-upload";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import EditProductCategories from "./_components/edit-product-categories";
 import EditProductMaterials from "./_components/edit-product-materials";
 import ProductImageUploader from "@/components/product-image-uploader";
 import DeleteProductImage from "./_components/delete-product-image";
 import SizeOptionForm from "./_components/size-option-form";
-import { useState } from "react";
 import { getProductSizes } from "@/utils/queries/sizes";
 
 interface Size {

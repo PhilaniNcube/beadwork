@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getChildCategories} from "@/utils/queries/categories";
+import Image from "next/image";
 import Link from "next/link";
 
 const CategoriesSection = async () => {
@@ -15,12 +16,14 @@ const CategoriesSection = async () => {
           categories.map((category, index) => (
             <Card
               key={index}
-              className="overflow-hidden transition-colors hover:bg-accent"
+              className="overflow-hidden transition-colors rounded-none hover:bg-accent"
             >
-              <img
+              <Image
+                width={1920}
+                height={1080}
                 src={category?.image_url || ""}
                 alt={category.name}
-                className="object-cover w-full h-44"
+                className="object-cover w-full aspect-[16/12]"
               />
               <CardContent className="flex flex-col items-center p-6">
                 <h2 className="mb-2 text-xl font-semibold text-center">

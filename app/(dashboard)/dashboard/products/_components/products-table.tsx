@@ -31,7 +31,22 @@ import {
 import type { Database } from "@/supabase";
 import { formatCurrency } from "@/utils/formatCurrency";
 import Link from "next/link";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { format } from "date-fns";
+import { deleteProductAction } from "@/utils/actions/products";
+import { Alert } from "@/components/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
+import DeleteDialog from "./delete-dialog";
 
 type Props = {
   products: Database["public"]["Tables"]["products"]["Row"][];
@@ -39,6 +54,8 @@ type Props = {
 };
 
 export default function ProductsTable({ products, count }: Props) {
+  const [open, setOpen] = useState(false);
+
   return (
     <Card className="mb-2">
       <CardContent>
@@ -75,26 +92,15 @@ export default function ProductsTable({ products, count }: Props) {
                   )}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  2023-07-12 10:42 AM
+                  {format(new Date(product.created_at), "dd/MM/yyyy")}
                 </TableCell>
                 <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button aria-haspopup="true" size="icon" variant="ghost">
-                        <MoreHorizontal className="w-4 h-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>
-                        <Link href={`/dashboard/products/${product.id}`}>
-                          Edit
-                        </Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex flex-row items-center gap-x-3">
+                    <Link href={`/dashboard/products/${product.id}`}>
+                      <Button variant="ghost">Edit</Button>
+                    </Link>
+                    <DeleteDialog productId={product.id} />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

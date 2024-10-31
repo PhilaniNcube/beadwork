@@ -10,7 +10,7 @@ export default async function Home() {
      <HomepageHero />
      <FeaturedProducts />
      <CategoriesSection />
-     <HomePageCallToAction />
+     {/* <HomePageCallToAction /> */}
     </div>
   );
 }
