@@ -2,18 +2,25 @@ import { createClient } from "../supabase/server";
 
 
 
-export async function getProducts(page = 1, limit = 10) {
-const supabase = createClient();
-  //  create the values for pagination
+export async function getProducts(page = 1, limit = 10, search = "") {
+  const supabase = createClient();
 
-	const start = ((page - 1) * limit)
-  const end = (page * limit) - 1;
+  // Create the values for pagination
+  const start = (page - 1) * limit;
+  const end = page * limit - 1;
 
-
-  const { data: products, error: productsError, count } = await supabase
+  // Build the query
+  let query = supabase
     .from("products")
     .select("*", { count: "exact" })
-    .range(start, end)
+    .range(start, end);
+
+  // If a search term is provided, add the search filter
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+  }
+
+  const { data: products, error: productsError, count } = await query;
 
   if (productsError) {
     return {
@@ -24,8 +31,7 @@ const supabase = createClient();
   return {
     products,
     count,
-  }
-
+  };
 }
 
 export async function getProductByID(id: number) {

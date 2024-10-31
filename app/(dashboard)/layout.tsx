@@ -33,8 +33,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import type { ReactNode } from "react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Image from "next/image";
+import Form from "next/form";
 
 
 export default function Dashboard({children}:{children:ReactNode}) {
@@ -162,16 +162,17 @@ export default function Dashboard({children}:{children:ReactNode}) {
             </SheetContent>
           </Sheet>
           <div className="flex-1 w-full">
-            <form>
+            <Form action="/dashboard/products">
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
+                  name="query"
                   placeholder="Search products..."
                   className="w-full pl-8 shadow-none appearance-none bg-background md:w-2/3 lg:w-1/3"
                 />
               </div>
-            </form>
+            </Form>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

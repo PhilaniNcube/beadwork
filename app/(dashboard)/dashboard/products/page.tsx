@@ -14,17 +14,18 @@ const Props = {
   }
 }
 
-const DashboardProductsPage = async (props: {searchParams: Promise<{page: string}>}) => {
+const DashboardProductsPage = async (props: {searchParams: Promise<{page: string, query?: string }>}) => {
     const searchParams = await props.searchParams;
 
     const {
-        page = "1"
+        page = "1",
+        query = ''
     } = searchParams;
 
     const pageValue= Number(page);
 
 
-    const {count, products, error} = await getProducts(pageValue, 10);
+    const {count, products, error} = await getProducts(pageValue, 10, searchParams.query);
 
     // get the max pages count
     const maxPages = count ? Math.ceil(count / 10) : 1;
