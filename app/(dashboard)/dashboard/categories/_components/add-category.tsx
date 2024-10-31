@@ -20,16 +20,14 @@ import {
 } from "@/utils/actions/categories";
 
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
-
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 
 const AddCategory = ({
   categories,
 }: {
   categories: Database["public"]["Tables"]["categories"]["Row"][];
 }) => {
-  const [categoryState, categoryAction] = useFormState(addCategoryAction, null);
+  const [categoryState, categoryAction] = useActionState(addCategoryAction, null);
   const [open, setOpen] = useState(false);
 
   const [categoryUrl, setCategoryUrl] = useState<string>("");

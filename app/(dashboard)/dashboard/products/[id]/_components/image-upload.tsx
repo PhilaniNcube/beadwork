@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useActionState, useRef, useState, useTransition } from "react";
 import {
 	Card,
 	CardHeader,
@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { UploadIcon, XIcon } from "lucide-react";
 import { UploadButton } from "@/utils/uploadthing";
-import { useFormState } from "react-dom";
 import { productImageUploadAction } from "@/utils/actions/image-upload-action";
 import type { Database } from "@/supabase";
 import Image from "next/image";
@@ -31,7 +30,7 @@ export default function ImageUpload({ productId, images }: Props) {
 		inputRef.current?.click();
 	};
 
-	const [state, formAction] = useFormState(productImageUploadAction, null);
+	const [state, formAction] = useActionState(productImageUploadAction, null);
 
 	const [pending, startTransition] = useTransition();
 

@@ -14,44 +14,49 @@ const Props = {
   }
 }
 
-const DashboardProductsPage = async({searchParams: {page = "1", }}: {searchParams: {page: string}}) => {
+const DashboardProductsPage = async (props: {searchParams: Promise<{page: string}>}) => {
+    const searchParams = await props.searchParams;
 
-  const pageValue= Number(page);
+    const {
+        page = "1"
+    } = searchParams;
+
+    const pageValue= Number(page);
 
 
-  const {count, products, error} = await getProducts(pageValue, 10);
+    const {count, products, error} = await getProducts(pageValue, 10);
 
-  // get the max pages count
-  const maxPages = count ? Math.ceil(count / 10) : 1;
+    // get the max pages count
+    const maxPages = count ? Math.ceil(count / 10) : 1;
 
-  return (
-			<div className="">
-				<Card>
-					<CardHeader className="relative isolate">
-						<CardTitle>Products</CardTitle>
-						<CardDescription>
-							Manage your products and view their sales performance.
-						</CardDescription>
-						<Link
-							href="/dashboard/products/create"
-							className="absolute top-1 right-2"
-						>
-							<Button>
-								{" "}
-								<PlusIcon className="mr-2" /> Create Product
-							</Button>
-						</Link>
-					</CardHeader>
-				</Card>
-				<ScrollArea className="h-[500px] mt-3">
-          {count && products &&
-					<ProductsTable count={count} products={products} />
-          }
-          {count &&
-          <PaginationComponent count={count} maxPages={maxPages} page={pageValue} href="/dashboard/products" />
-          }
-				</ScrollArea>
-			</div>
-		);
+    return (
+              <div className="">
+                  <Card>
+                      <CardHeader className="relative isolate">
+                          <CardTitle>Products</CardTitle>
+                          <CardDescription>
+                              Manage your products and view their sales performance.
+                          </CardDescription>
+                          <Link
+                              href="/dashboard/products/create"
+                              className="absolute top-1 right-2"
+                          >
+                              <Button>
+                                  {" "}
+                                  <PlusIcon className="mr-2" /> Create Product
+                              </Button>
+                          </Link>
+                      </CardHeader>
+                  </Card>
+                  <ScrollArea className="h-[500px] mt-3">
+            {count && products &&
+                      <ProductsTable count={count} products={products} />
+            }
+            {count &&
+            <PaginationComponent count={count} maxPages={maxPages} page={pageValue} href="/dashboard/products" />
+            }
+                  </ScrollArea>
+              </div>
+          );
 };
 export default DashboardProductsPage;

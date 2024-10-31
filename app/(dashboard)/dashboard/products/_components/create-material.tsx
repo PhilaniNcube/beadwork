@@ -4,15 +4,13 @@ import { Button } from "@/components/ui/button";
 import { CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { createCategoryAction } from "@/utils/actions/categories";
 import { createMaterialAction } from "@/utils/actions/materials";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 
 const CreateMaterial = () => {
 
-  const [materialState, materialAction] = useFormState(
+  const [materialState, materialAction] = useActionState(
 			createMaterialAction,
 			null,
 		);

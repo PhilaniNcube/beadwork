@@ -4,7 +4,13 @@ import { ArrowLeft, SkipBack } from "lucide-react";
 import Link from "next/link";
 import UpdateCategory from "../_components/update-category";
 
-const page = async ({ params: { id } }: { params: { id: number } }) => {
+const page = async (props: { params: Promise<{ id: number }> }) => {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   console.log(id);
 
   const categoryData = getCategoryById(id);

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start"
   },
@@ -47,15 +47,16 @@
     "cookie": "^0.6.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.7",
+    "eslint-config-next": "^15.0.2",
     "geist": "^1.2.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.417.0",
-    "next": "latest",
+    "next": "15.0.2",
     "next-themes": "^0.3.0",
     "postcss": "8.4.33",
-    "react": "18.2.0",
+    "react": "19.0.0-rc-603e6108-20241029",
     "react-day-picker": "^8.10.1",
-    "react-dom": "18.2.0",
+    "react-dom": "19.0.0-rc-603e6108-20241029",
     "react-hook-form": "^7.52.1",
     "react-resizable-panels": "^2.0.22",
     "recharts": "^2.12.7",
@@ -74,8 +75,14 @@
   },
   "devDependencies": {
     "@types/node": "20.11.5",
-    "@types/react": "18.2.48",
-    "@types/react-dom": "18.2.18",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "encoding": "^0.1.13"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    }
   }
 }

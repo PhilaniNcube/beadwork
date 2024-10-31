@@ -5,8 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Database } from "@/supabase";
 import { Check, XIcon } from "lucide-react";
-import { useOptimistic, useTransition } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useOptimistic, useTransition } from "react";
 import { updateProductMaterialAction } from "@/utils/actions/materials";
 import CreateMaterial from "../../_components/create-material";
 
@@ -31,7 +30,7 @@ const EditProductMaterials = ({
 	materials,
 	productMaterials,
 }: Props) => {
-	const [state, formAction] = useFormState(updateProductMaterialAction, null);
+	const [state, formAction] = useActionState(updateProductMaterialAction, null);
 	const [pending, startTransition] = useTransition();
 
 	const [optimisticProductMaterialsState, addOptimistic] = useOptimistic(

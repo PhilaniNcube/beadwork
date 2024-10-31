@@ -13,7 +13,7 @@ export const updateSession = async (request: NextRequest) => {
       },
     });
 
-    const supabase = createServerClient<Database>(
+    const supabase = await createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       {
@@ -21,21 +21,21 @@ export const updateSession = async (request: NextRequest) => {
           getAll() {
             return request.cookies.getAll();
           },
-          setAll(cookiesToSet) {
+         async setAll(cookiesToSet) {
             // biome-ignore lint/complexity/noForEach: <explanation>
             cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value),
+              request.cookies.set(name, value)
             );
             response = NextResponse.next({
               request,
             });
             // biome-ignore lint/complexity/noForEach: <explanation>
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options),
+              response.cookies.set(name, value, options)
             );
           },
         },
-      },
+      }
     );
 
     // This will refresh session if expired - required for Server Components

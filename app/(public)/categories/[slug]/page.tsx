@@ -4,11 +4,17 @@ import { getProductsByCategoryId } from "@/utils/queries/products";
 import CategoryProduct from "./_components/category-product";
 import Image from "next/image";
 
-const CategoryPage = async ({
-  params: { slug },
-}: {
-  params: { slug: string };
-}) => {
+const CategoryPage = async (
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) => {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const category = await getCategoryBySlug(slug);
 
   if (!category.data) {

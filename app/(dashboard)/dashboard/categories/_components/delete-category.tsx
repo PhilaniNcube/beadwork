@@ -1,10 +1,10 @@
+import { useActionState } from "react";
 import { SubmitButton } from "@/components/submit-button";
 import { deleteCategoryAction } from "@/utils/actions/categories";
 import { Trash, Trash2 } from "lucide-react";
-import { useFormState } from "react-dom";
 
 const DeleteCategory = ({ id }: { id: number }) => {
-  const [state, formAction] = useFormState(deleteCategoryAction, null);
+  const [state, formAction] = useActionState(deleteCategoryAction, null);
 
   return (
     <form action={formAction}>

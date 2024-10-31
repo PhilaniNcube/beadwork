@@ -2,14 +2,13 @@
 
 import { deleteProductImage } from "@/utils/actions/delete-product-image";
 import { CircleDashed, Trash2 } from "lucide-react";
-import { startTransition, useState } from "react";
-import { useFormState } from "react-dom";
+import { startTransition, useActionState, useState } from "react";
 
 const DeleteProductImage = ({imageId}:{imageId:number}) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-    const [state, formAction] = useFormState(deleteProductImage, null);
+    const [state, formAction] = useActionState(deleteProductImage, null);
 
   return (
     <form action={(formData) => {

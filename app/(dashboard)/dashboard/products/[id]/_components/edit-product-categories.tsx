@@ -8,8 +8,7 @@ import { cn } from "@/lib/utils";
 import type { Database } from "@/supabase";
 import { updateProductCategoryAction } from "@/utils/actions/categories";
 import { Check, XIcon } from "lucide-react";
-import { useOptimistic, useTransition } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useOptimistic, useTransition } from "react";
 import CreateCategory from "../../_components/create-category";
 
 type Props = {
@@ -33,7 +32,7 @@ const EditProductCategories = ({
 	categories,
 	productCategories,
 }: Props) => {
-	const [state, formAction] = useFormState(updateProductCategoryAction, null);
+	const [state, formAction] = useActionState(updateProductCategoryAction, null);
 	const [pending, startTransition] = useTransition();
 
   const [optimisticProductCategoriesState, addOptimistic] = useOptimistic(

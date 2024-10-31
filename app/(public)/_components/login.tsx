@@ -1,18 +1,18 @@
 "use client";
 
+import { useActionState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormState } from "react-dom";
 import { loginAction } from "@/utils/actions/auth";
-import { SubmitButton } from "@/components/submit-button";
+import { CircleDashed } from "lucide-react";
 
 export function Login() {
 
-  const [state, formAction] = useFormState(loginAction, null)
+  const [state, formAction, isPending ] = useActionState(loginAction, null)
 
 
 	return (
@@ -58,9 +58,9 @@ export function Login() {
 								</small>
 							))}
 						</div>
-						<SubmitButton type="submit" className="w-full">
-							Login
-						</SubmitButton>
+						<Button type="submit" className="w-full" disabled={isPending}>
+							{isPending ? <CircleDashed className="animate-spin" /> : 'Login'}
+						</Button>
 					</form>
 					<div className="mt-4 text-sm text-center">
 						Don&apos;t have an account?{" "}

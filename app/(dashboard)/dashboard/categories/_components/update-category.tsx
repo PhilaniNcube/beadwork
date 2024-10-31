@@ -15,9 +15,7 @@ import { Database } from "@/supabase";
 import {
   updateCategoryAction,
 } from "@/utils/actions/categories";
-import { useState } from "react";
-
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 
 const UpdateCategory = ({
   categories,
@@ -26,14 +24,14 @@ const UpdateCategory = ({
   categories: Database["public"]["Tables"]["categories"]["Row"][];
   category: Database["public"]["Tables"]["categories"]["Row"];
 }) => {
-  const [categoryState, categoryAction] = useFormState(updateCategoryAction, null);
+  const [categoryState, categoryAction] = useActionState(updateCategoryAction, null);
   const [open, setOpen] = useState(false);
 
 
   const [categoryUrl, setCategoryUrl] = useState<string>("");
 
   return (
-    <Card className="p-4 max-w-5xl">
+    <Card className="max-w-5xl p-4">
       <CardHeader>
         <CardTitle>Update Category</CardTitle>
       </CardHeader>

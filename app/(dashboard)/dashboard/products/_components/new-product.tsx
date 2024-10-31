@@ -31,10 +31,9 @@ import type { Database } from "@/supabase";
 import CreateCategory from "./create-category";
 import CreateMaterial from "./create-material";
 import { SubmitButton } from "@/components/submit-button";
-import { useFormState } from "react-dom";
 import { createProductAction } from "@/utils/actions/products";
 import { Separator } from "@/components/ui/separator";
-import { useTransition } from "react";
+import { useActionState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Circle, CircleDashed } from "lucide-react";
 
@@ -54,7 +53,7 @@ export default function CreateProduct({ categories, materials }: Props) {
 		mode: "onBlur",
 	});
 
-	const [state, formAction] = useFormState(createProductAction, null);
+	const [state, formAction] = useActionState(createProductAction, null);
   const [pending, startTransition] = useTransition();
 
 	const handleSubmit = (data: z.infer<typeof productSchema>) => {

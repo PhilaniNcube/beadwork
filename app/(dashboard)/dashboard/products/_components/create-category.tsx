@@ -6,12 +6,11 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { createCategoryAction } from "@/utils/actions/categories";
 import { PlusIcon } from "lucide-react";
-import { useState } from "react";
-import { useFormState } from "react-dom";
+import { useActionState, useState } from "react";
 
 const CreateCategory = () => {
 
-const [categoryState, categoryAction] = useFormState(
+const [categoryState, categoryAction] = useActionState(
 	createCategoryAction,
 	null,
 );

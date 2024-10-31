@@ -5,8 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addSize } from "@/utils/actions/sizes";
-import React, { useTransition } from "react";
-import { useFormState } from "react-dom";
+import React, { useActionState, useTransition } from "react";
 
 interface SizeOptionFormProps {
   productId: number;
@@ -21,7 +20,7 @@ interface Size {
 const SizeOptionForm: React.FC<SizeOptionFormProps> = ({ productId }) => {
 
 const [isPending, startTransition] = useTransition();
-  const [state, formAction] = useFormState(addSize, null);
+  const [state, formAction] = useActionState(addSize, null);
 
   const handleSubmit = (formData:FormData) => {
     formAction(formData);

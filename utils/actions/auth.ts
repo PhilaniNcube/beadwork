@@ -31,7 +31,7 @@ export async function loginAction(prevState: unknown, formData: FormData) {
 export async function signUpAction(prevState: unknown, formData: FormData) {
   const supabase = createClient();
 
-  const origin = headers().get("origin");
+  const origin = (await headers()).get("origin");
 
   const validatedFields = signUpSchema.safeParse({
     email: formData.get("email"),

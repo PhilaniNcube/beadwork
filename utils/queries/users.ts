@@ -2,7 +2,7 @@ import { cache } from "react";
 import { createClient } from "../supabase/server";
 
 export const getCurrentUser = cache(async () => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {data:{user}} = await supabase.auth.getUser();
 
@@ -10,7 +10,7 @@ export const getCurrentUser = cache(async () => {
 })
 
 export const getUserProfile = cache(async (id:string) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {data, error} = await supabase
     .from("profiles")
@@ -27,7 +27,7 @@ export const getUserProfile = cache(async (id:string) => {
 
 
 export async function getAdmin () {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {data, error} = await supabase.rpc("is_admin");
   if(error) {

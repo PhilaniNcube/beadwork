@@ -9,11 +9,12 @@ import { redirect } from "next/navigation";
 import ProductSearchForm from "./_components/product-search-form";
 import { Suspense } from "react";
 
-const ShopPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const ShopPage = async (
+  props: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  }
+) => {
+  const searchParams = await props.searchParams;
   // get the search query from the searchParams
   const search = searchParams.q as string;
 

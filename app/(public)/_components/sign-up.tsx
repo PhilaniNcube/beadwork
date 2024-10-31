@@ -12,16 +12,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormState } from "react-dom";
 import { signUpAction } from "@/utils/actions/auth";
 
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { SubmitButton } from "@/components/submit-button";
-import { startTransition } from "react";
+import { startTransition, useActionState } from "react";
 
 export function SignUp() {
-	const [state, formAction] = useFormState(signUpAction, null);
+	const [state, formAction] = useActionState(signUpAction, null);
 
 	const clientAction = (formData: FormData) => {
 		startTransition(() => {
@@ -44,7 +43,7 @@ export function SignUp() {
 	};
 
 	return (
-		<Card className="mx-auto max-w-sm">
+		<Card className="max-w-sm mx-auto">
 			<CardHeader>
 				<CardTitle className="text-xl">Sign Up</CardTitle>
 				<CardDescription>
@@ -123,7 +122,7 @@ export function SignUp() {
 						Create an account
 					</SubmitButton>
 				</form>
-				<div className="mt-4 text-center text-sm">
+				<div className="mt-4 text-sm text-center">
 					Already have an account?{" "}
 					<Link href="/login" className="underline">
 						Sign in

@@ -30,13 +30,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import type { Database } from "@/supabase";
 
 import { SubmitButton } from "@/components/submit-button";
-import { useFormState } from "react-dom";
 import {
 	createProductAction,
 	editProductAction,
 } from "@/utils/actions/products";
 import { Separator } from "@/components/ui/separator";
-import { startTransition, useTransition } from "react";
+import { startTransition, useActionState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Circle, CircleDashed } from "lucide-react";
 import CreateCategory from "../../_components/create-category";
@@ -60,7 +59,7 @@ export default function EditProduct({ product }: Props) {
 		mode: "onBlur",
 	});
 
-	const [state, formAction] = useFormState(editProductAction, null);
+	const [state, formAction] = useActionState(editProductAction, null);
 
 
 

@@ -25,11 +25,17 @@ interface Size {
   dimensions?: string;
 }
 
-const DashboardProducts = async ({
-  params: { id },
-}: {
-  params: { id: number };
-}) => {
+const DashboardProducts = async (
+  props: {
+    params: Promise<{ id: number }>;
+  }
+) => {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const categoryData = getCategories();
   const materialsData = getMaterials();
   const productData = getProductByID(id);
