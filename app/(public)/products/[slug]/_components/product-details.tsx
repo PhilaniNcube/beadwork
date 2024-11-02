@@ -17,15 +17,29 @@ import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import Lightbox from "./lightbox";
 
 type Props = {
   product: ProductDetailsType;
 };
 
 export default function ProductDetails({ product }: Props) {
+
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const imageUrls = product.product_images.map((image) => image.image_url);
+
+      const handleImageClick = (index: number) => {
+        setLightboxIndex(index);
+        setIsLightboxOpen(true);
+      };
+
   const { products: cartItems, addToCart } = useCartStore((state) => state);
 
   const [selectedImage, setSelectedImage] = useState(product.product_images[0]);
+
+
 
   // check if the product is already in the cart and return the cart item itself
   const cartItem = cartItems.find((item) => item.id === product.id);
@@ -56,7 +70,8 @@ export default function ProductDetails({ product }: Props) {
                           width={500}
                           height={500}
                           layout="intrinsic"
-                          className="object-cover w-full h-full"
+                          className="object-cover w-full h-full cursor-pointer"
+                          onClick={() => handleImageClick(0)}
                         />
                       </CardContent>
                     </Card>
@@ -68,21 +83,29 @@ export default function ProductDetails({ product }: Props) {
             <CarouselNext className="z-30" />
           </Carousel>
           <div className="grid grid-cols-5 gap-2">
-            {product.product_images.map((image) => (
+            {product.product_images.map((image, index) => (
               <div
                 key={image.id}
                 className="col-span-1 overflow-hidden border rounded-lg"
               >
-                <img
+                <Image
                   src={image.image_url}
                   alt={product.title}
                   width={200}
                   height={200}
+                  onClick={() => handleImageClick(index)}
                   className="object-cover w-full h-full aspect-square"
                   style={{ aspectRatio: "100/100", objectFit: "cover" }}
                 />
               </div>
             ))}
+            {isLightboxOpen && (
+              <Lightbox
+                images={imageUrls}
+                initialIndex={lightboxIndex}
+                onClose={() => setIsLightboxOpen(false)}
+              />
+            )}
           </div>
         </div>
         <div className="md:pl-7 md:col-span-2">
