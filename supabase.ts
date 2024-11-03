@@ -109,6 +109,7 @@ export type Database = {
           price: number;
           product_id: number;
           quantity: number;
+          size: string | null;
         };
         Insert: {
           id?: string;
@@ -116,6 +117,7 @@ export type Database = {
           price: number;
           product_id: number;
           quantity: number;
+          size?: string | null;
         };
         Update: {
           id?: string;
@@ -123,6 +125,7 @@ export type Database = {
           price?: number;
           product_id?: number;
           quantity?: number;
+          size?: string | null;
         };
         Relationships: [
           {
@@ -446,22 +449,22 @@ export type Database = {
       };
       sizes: {
         Row: {
-          dimensions: string | null;
+          dimensions: string;
           id: number;
           name: string;
-          product_id: number | null;
+          product_id: number;
         };
         Insert: {
-          dimensions?: string | null;
+          dimensions: string;
           id?: number;
           name: string;
-          product_id?: number | null;
+          product_id: number;
         };
         Update: {
-          dimensions?: string | null;
+          dimensions?: string;
           id?: number;
           name?: string;
-          product_id?: number | null;
+          product_id?: number;
         };
         Relationships: [
           {

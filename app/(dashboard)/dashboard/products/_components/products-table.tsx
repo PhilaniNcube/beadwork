@@ -47,13 +47,15 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import DeleteDialog from "./delete-dialog";
+import { cn } from "@/lib/utils";
 
 type Props = {
   products: Database["public"]["Tables"]["products"]["Row"][];
   count: number;
+  sizes: Database["public"]["Tables"]["sizes"]["Row"][] | undefined;
 };
 
-export default function ProductsTable({ products, count }: Props) {
+export default function ProductsTable({ products, count, sizes }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -77,7 +79,30 @@ export default function ProductsTable({ products, count }: Props) {
           <TableBody>
             {products.map((product) => (
               <TableRow key={product.id}>
-                <TableCell className="font-medium">{product.title}</TableCell>
+                <TableCell className="font-medium">
+                  <p>{product.title}</p>
+                  {/* filter the sizes and return the sizes for this product if they are available */}
+                  {sizes !== undefined && (
+                    <div className="flex flex-row gap-x-2">
+                      {sizes
+                        .filter((size) => size.product_id === product.id)
+                        .map((size) => (
+                          <Badge
+                            className={cn(
+                              "text-xs",
+                              size.name === "Small" && "bg-blue-200",
+                              size.name === "Medium" && "bg-zinc-200",
+                              size.name === "Large" && "bg-violet-400",
+                            )}
+                            key={size.id}
+                            variant="outline"
+                          >
+                            {size.name}
+                          </Badge>
+                        ))}
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell>
                   <Badge variant="outline">{product.stock}</Badge>
                 </TableCell>

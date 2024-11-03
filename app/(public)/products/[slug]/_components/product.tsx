@@ -1,4 +1,4 @@
-import { getProductDetails } from "@/utils/queries/products";
+import { getProductDetails, getProductSizes } from "@/utils/queries/products";
 import ProductDetails from "./product-details";
 
 const Product = async ({ slug }:{slug:string}) => {
@@ -11,7 +11,9 @@ const Product = async ({ slug }:{slug:string}) => {
        );
      }
 
+     const sizes = await getProductSizes(product.id);
 
-  return <ProductDetails product={product} />;
+
+  return <ProductDetails product={product} sizes={sizes} />;
 };
 export default Product;

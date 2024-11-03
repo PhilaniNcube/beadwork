@@ -18,12 +18,14 @@ import { startTransition, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import Lightbox from "./lightbox";
+import { Database } from "@/supabase";
 
 type Props = {
   product: ProductDetailsType;
+  sizes: Database['public']['Tables']['sizes']['Row'][];
 };
 
-export default function ProductDetails({ product }: Props) {
+export default function ProductDetails({ product, sizes }: Props) {
 
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [lightboxIndex, setLightboxIndex] = useState(0);
@@ -39,6 +41,8 @@ export default function ProductDetails({ product }: Props) {
 
   const [selectedImage, setSelectedImage] = useState(product.product_images[0]);
 
+   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+
 
 
   // check if the product is already in the cart and return the cart item itself
@@ -47,8 +51,21 @@ export default function ProductDetails({ product }: Props) {
   const router = useRouter();
 
   const handleAddToCart = () => {
+
+    // if there are no sizes, add the product to the cart
+    if (sizes.length === 0 || !selectedSize) {
+      startTransition(() => {
+        addToCart({ ...product, quantity: cartItem ? cartItem.quantity + 1 : 1 });
+        router.push("/cart");
+      });
+      return;
+    }
     startTransition(() => {
-      addToCart({ ...product, quantity: cartItem ? cartItem.quantity + 1 : 1 });
+      addToCart({
+        ...product,
+        quantity: cartItem ? cartItem.quantity + 1 : 1,
+        size: selectedSize,
+      });
       router.push("/cart");
     });
   };
@@ -156,6 +173,26 @@ export default function ProductDetails({ product }: Props) {
               {product.stock} in stock
             </Badge>
           </div>
+          {sizes.length > 0 && (
+            <div className="mt-4">
+              <h2 className="text-sm font-medium">Select Size:</h2>
+              <div className="flex mt-2 space-x-2">
+                {sizes.map((size) => (
+                  <Button
+                    key={size.name}
+                    onClick={() => setSelectedSize(size.name)}
+                    className={`px-3 py-1 border rounded-md ${
+                      selectedSize === size.name
+                        ? "bg-blue-500 text-white"
+                        : "bg-white text-black"
+                    }`}
+                  >
+                    {size.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
           <Button
             className="rounded-none"
             type="button"

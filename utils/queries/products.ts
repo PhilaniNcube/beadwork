@@ -17,10 +17,13 @@ export async function getProducts(page = 1, limit = 10, search = "") {
 
   // If a search term is provided, add the search filter
   if (search) {
-    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`).order("title");
   }
 
   const { data: products, error: productsError, count } = await query;
+
+  // fetch the different sizes
+  const {data:sizes, error} = await supabase.from("sizes").select("*");
 
   if (productsError) {
     return {
@@ -31,6 +34,7 @@ export async function getProducts(page = 1, limit = 10, search = "") {
   return {
     products,
     count,
+    sizes: error ? [] : sizes,
   };
 }
 
@@ -210,6 +214,21 @@ export async function getSearchProducts(search = '', page = 1) {
   }
 
   return products;
+}
+
+export async function getProductSizes(productId: number) {
+  const supabase = createClient();
+
+  const { data: sizes, error: sizesError } = await supabase
+    .from("sizes")
+    .select("*")
+    .eq("product_id", productId);
+
+  if (sizesError || !sizes || sizes.length === 0) {
+    return [];
+  }
+
+  return sizes;
 }
 
 
