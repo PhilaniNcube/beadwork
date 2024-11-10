@@ -149,12 +149,7 @@ export default function ContactPage() {
               <p>info@glambeads.co.za</p>
             </div>
           </div>
-          <div className="mt-8">
-            <h3 className="mb-2 text-xl font-semibold">Location</h3>
-            <div className="flex items-center justify-center w-full h-64 bg-gray-300 rounded-lg">
-              <p className="text-gray-600">Map Placeholder</p>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
