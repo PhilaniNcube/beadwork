@@ -25,14 +25,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, SearchIcon } from "lucide-react";
+import { CalendarIcon,  SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Database } from "@/supabase";
 import { formatCurrency } from "@/utils/formatCurrency";
+import Link from "next/link";
 
-
-
-export default function OrdersPage({orders}:{orders:Database['public']['Tables']['orders']['Row'][]}) {
+export default function OrdersPage({
+  orders,
+}: {
+  orders: Database["public"]["Tables"]["orders"]["Row"][];
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [dateRange, setDateRange] = useState({
@@ -82,7 +85,6 @@ export default function OrdersPage({orders}:{orders:Database['public']['Tables']
                   className="w-[180px] justify-start text-left font-normal"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -119,7 +121,8 @@ export default function OrdersPage({orders}:{orders:Database['public']['Tables']
                 <TableCell>{formatCurrency(order.total_amount)}</TableCell>
                 <TableCell>
                   <Badge
-                    className={cn("rounded-full text-white flex items-center justify-center",
+                    className={cn(
+                      "rounded-full text-white flex items-center justify-center",
                       order.status === "PENDING" && "bg-yellow-500",
                       order.status === "PROCESSING" && "bg-blue-500",
                       order.status === "SHIPPED" && "bg-green-500",
@@ -131,9 +134,11 @@ export default function OrdersPage({orders}:{orders:Database['public']['Tables']
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">
-                  <Button variant="ghost" size="sm">
-                    View
-                  </Button>
+                  <Link href={`/dashboard/orders/${order.id}`}>
+                    <Button variant="ghost" size="sm">
+                      View
+                    </Button>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

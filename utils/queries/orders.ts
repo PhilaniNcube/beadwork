@@ -27,7 +27,7 @@ export async function getTotalOrders() {
   return { count, status: 200 };
 }
 
-export async function getOrderById(id:number) {
+export async function getOrderById(id:string) {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("orders").select("*").eq("id", id).single();
@@ -146,3 +146,43 @@ export async function getOrderByTransactionId(transaction_id:string) {
 }
 
 
+export async function getShippingAddress (id:number) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("shipping_addresses").select("*").eq("id", id).single();
+
+  if (error) {
+    return { error: error.message, status: 400 };
+  }
+
+  return { data, status: 200 };
+}
+
+
+export async function getOrderItems (orderId:string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("order_items").select("*").eq("order_id", orderId);
+
+  // fetch the product name of each item in the order items
+
+
+  if (error) {
+    return { error: error.message, status: 400 };
+  }
+
+  return { data, status: 200 };
+}
+
+
+export const getProductName = async (productId:number) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("products").select("title, slug, id").eq("id", productId).single();
+
+  if (error) {
+    return { error: error.message, status: 400 };
+  }
+
+  return { data, status: 200 };
+}

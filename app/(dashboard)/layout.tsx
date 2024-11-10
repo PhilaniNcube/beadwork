@@ -35,9 +35,20 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Form from "next/form";
+import { getAdmin } from "@/utils/queries/users";
+import { redirect } from "next/navigation";
 
 
-export default function Dashboard({children}:{children:ReactNode}) {
+export default async function Dashboard({children}:{children:ReactNode}) {
+
+  const admin = await getAdmin();
+
+  console.log(admin);
+
+  if (!admin) {
+    redirect("/login");
+  }
+
 	return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
