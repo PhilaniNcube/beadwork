@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "../supabase/server";
 import { getCurrentUser } from "../queries/users";
+import { size } from "@/app/icon";
 
 type InitializeResponse = {
 	status: boolean;
@@ -138,6 +139,7 @@ export async function checkoutAction(
         product_id: item.id,
         quantity: item.quantity,
         price: item.price,
+        size: item.size,
     }));
 
     const { data: order_items_data, error: order_items_error } = await supabase.from("order_items").insert(order_items_insert).select("*");

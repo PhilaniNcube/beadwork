@@ -119,3 +119,30 @@ export async function getOrderItemValues () {
 
   return {data, status: 200 };
 }
+
+
+// get order by transaction_id
+export async function getOrderByTransactionId(transaction_id:string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("orders").select("*").eq("transaction_id", transaction_id).single();
+
+  if (error) {
+    return { error: error.message, status: 400 };
+  }
+
+  // fetch the order items
+  const { data: order_items, error: order_items_error } = await supabase.from("order_items").select("*").eq("order_id", data?.id);
+
+
+//  fetch the shipping address
+  const { data: shipping_address, error: shipping_address_error } = await supabase.from("shipping_addresses").select("*").eq("id", data?.shipping_address_id).single();
+
+  if (order_items_error || shipping_address_error) {
+    return { error: "Error fetching order details", status: 400 };
+  }
+
+  return { data, status: 200, order_items, shipping_address };
+}
+
+

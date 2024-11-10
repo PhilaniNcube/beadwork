@@ -1,59 +1,50 @@
-import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
-import { Hand, TimerOff, Truck } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { Fragment } from "react";
 
-export default function HeroSection() {
+export default function SaleHeroBanner() {
   return (
-    <Fragment>
-      <section className="relative h-[calc(100vh-15rem)] min-h-[500px] w-full overflow-hidden">
-        <Image
-          src="https://utfs.io/f/I8dKBSGAO9kqQd1qMjVUB17I0Kc2RqMGZhJOtf8Lnvpduerg"
-          alt="Handmade jewelry collection"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 object-cover w-full h-full"
-          priority
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50" />
-        <div className="relative flex flex-col items-center justify-center h-full px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-            Handcrafted Beauty, Just for You
+    <div className="relative bg-primary overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary-foreground opacity-90" />
+        <div className="absolute inset-0 bg-cover bg-center" />
+      </div>
+      <div className="relative max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl">
+            Summer Sale Extravaganza!
           </h1>
-          <p className="max-w-3xl mb-8 text-xl text-gray-200 sm:text-2xl">
-            Discover unique, artisanal jewelry pieces that tell your story. Each
-            item is lovingly crafted to bring out your inner radiance.
+          <p className="mt-4 text-xl text-primary-foreground/80 max-w-3xl mx-auto">
+            Enjoy incredible savings across our entire collection
           </p>
-          <Link href="/categories">
-            <Button
-              size="lg"
-              className="px-8 py-3 text-lg bg-white rounded-none text-slate-900 hover:text-white"
-            >
-              Shop Collection
-            </Button>
-          </Link>
-        </div>
-      </section>
-      <div className="hidden text-white bg-black md:flex">
-        <div className="container flex items-center justify-around py-2">
-          <div className="flex items-center gap-x-3">
-            <Truck size={16} />
-            <span className="text-sm">
-              Free shipping on all orders over R1200
+          <div className="mt-8 flex flex-col items-center justify-center">
+            <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-secondary text-secondary-foreground">
+              Limited Time Offer
             </span>
+            <p className="mt-4 text-5xl font-bold text-primary-foreground">
+              50% OFF
+            </p>
+            <p className="mt-2 text-xl text-primary-foreground/80">
+              On All Products
+            </p>
           </div>
-          <div className="flex items-center gap-x-3">
-            <Hand size={16} />
-            <span className="text-sm">Hand crafted jewellery</span>
-          </div>
-          <div className="flex items-center gap-x-3">
-            <TimerOff size={16} />
-            <span className="text-sm">Exclusive pieces</span>
+          <div className="mt-10">
+            <Button asChild size="lg" className="group">
+              <Link href="/shop">
+                Shop Now
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
-    </Fragment>
+      <div className="absolute bottom-4 left-4 flex items-center space-x-2 text-primary-foreground/80">
+        <ShoppingBag className="h-5 w-5" />
+        <span className="text-sm font-medium">
+          Free shipping on orders over R500
+        </span>
+      </div>
+    </div>
   );
 }
+

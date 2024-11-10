@@ -9,7 +9,7 @@ const CategoriesSection = async () => {
     const { status, data: categories } = await getChildCategories();
 
   return (
-    <div className="bg-slate-300">
+    <div className="bg-slate-300 mt-16">
       <div className="container px-4 py-8 mx-auto ">
         <h1 className="mb-8 text-3xl lg:text-4xl font-bold text-center">
           Shop by Category
