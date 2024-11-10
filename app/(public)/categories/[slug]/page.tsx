@@ -32,12 +32,12 @@ const CategoryPage = async (
               <Image
                 width={1920}
                 height={1080}
-                className="object-cover w-full h-80"
+                className="object-cover w-full h-80 backdrop-blur-sm"
                 src={category.data.image_url!}
                 alt="sofa"
               />
 
-              <div className="absolute flex items-start justify-start pr-10 sm:bottom-8 bottom-4 sm:pr-0 left-4 sm:left-8">
+              <div className="absolute bg-blue-100/30 inset-0 flex items-center justify-center">
                 <p className="text-3xl font-semibold leading-9 sm:text-4xl">
                   {category.data.name}
                 </p>
