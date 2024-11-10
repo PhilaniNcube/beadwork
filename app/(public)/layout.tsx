@@ -10,7 +10,7 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
 	metadataBase: new URL(defaultUrl),
-	title: "Beadworks",
+	title: "Glambeads",
 	description:
 		"Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
 };

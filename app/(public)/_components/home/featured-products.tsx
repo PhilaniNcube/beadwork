@@ -32,7 +32,10 @@ const FeaturedProducts = async () => {
 										{product.title}
 									</h3>
 									<h4 className="text-lg font-bold text-slate-950">
-										{formatCurrency(product.price)}
+										<span className="text-red-600 line-through mr-3">
+                      {formatCurrency(product.price *2)}
+                      </span>
+                      {formatCurrency(product.price)}
 									</h4>
 									<Button className="w-full mt-2 rounded-none">View Product</Button>
 								</div>

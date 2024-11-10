@@ -72,8 +72,8 @@ export default function ProductDetails({ product, sizes }: Props) {
 
   return (
     <div className="container px-0 py-12 mx-auto">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <div className="grid col-span-1 gap-4">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-5">
+        <div className="grid col-span-1 md:col-span-2 gap-4">
           <Carousel className="relative rounded-lg aspect-square">
             <CarouselContent>
               {product.product_images.map((image) => (
@@ -125,7 +125,7 @@ export default function ProductDetails({ product, sizes }: Props) {
             )}
           </div>
         </div>
-        <div className="md:pl-7 md:col-span-2">
+        <div className="md:pl-7 md:col-span-3">
           <div className="">
             <h1 className="text-3xl font-bold">{product.title}</h1>
             <div className="flex flex-col items-start gap-2">
@@ -159,6 +159,9 @@ export default function ProductDetails({ product, sizes }: Props) {
           </div>
           <p className="mb-3 text-muted-foreground">{product.description}</p>
           <div className="mb-3 text-2xl font-bold">
+            <span className="text-red-600 line-through mr-3">
+              {formatCurrency(product.price * 2)}
+            </span>
             {formatCurrency(product.price)}
           </div>
           <div className="flex items-center gap-2 mb-3">

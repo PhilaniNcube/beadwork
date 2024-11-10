@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { startTransition, useActionState, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
+import { sendContactForm } from "@/utils/actions/contact-action";
+import { start } from "repl";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -26,8 +28,8 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Please enter a valid email address.",
   }),
-  message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+  message: z.string().min(4, {
+    message: "Message must be at least 4 characters.",
   }),
 });
 
@@ -43,7 +45,19 @@ export default function ContactPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const [state, formAction, isPending] = useActionState(sendContactForm, null);
+
+  function onSubmit(values: z.infer<typeof formSchema>)  {
+
+    const fomrData = new FormData();
+    fomrData.append("name", values.name);
+    fomrData.append("email", values.email);
+    fomrData.append("message", values.message);
+
+    startTransition(() => formAction(fomrData));
+
+
+
     // Here you would typically send the form data to your server
     console.log(values);
     setIsSubmitted(true);
@@ -112,7 +126,7 @@ export default function ContactPage() {
                     </FormItem>
                   )}
                 />
-                <Button className="rounded-none" type="submit">Send Message</Button>
+                <Button disabled={isPending} className="rounded-none" type="submit">Send Message</Button>
               </form>
             </Form>
           )}
