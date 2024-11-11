@@ -1,6 +1,24 @@
+import { getCategorySlugs } from "@/utils/queries/categories";
+import { getProductSlugs } from "@/utils/queries/products";
 import type { MetadataRoute } from "next";
 
-export default  function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+
+  const BASE_URL = "https://www.glambeads.co.za";
+  const productSlugs = await getProductSlugs();
+
+  const categorySlugs = await getCategorySlugs();
+  const categories = categorySlugs.map((slug) => ({
+    url: `${BASE_URL}/categories/${slug.slug}`,
+    lastModified: new Date().toISOString(),
+  }));
+
+  const products = productSlugs.map((slug) => ({
+    url: `${BASE_URL}/products/${slug.slug}`,
+    lastModified: new Date().toISOString(),
+  }));
+
+
   return [
     {
       url: "https://www.glambeads.co.za",
@@ -42,5 +60,7 @@ export default  function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    ...products,
+    ...categories,
   ];
 }
