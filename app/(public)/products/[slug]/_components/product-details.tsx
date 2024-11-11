@@ -177,21 +177,22 @@ export default function ProductDetails({ product, sizes }: Props) {
             </Badge>
           </div>
           {sizes.length > 0 && (
-            <div className="mt-4">
+            <div className="my-4">
               <h2 className="text-sm font-medium">Select Size:</h2>
               <div className="flex mt-2 space-x-2">
                 {sizes.map((size) => (
-                  <Button
+                  <div
                     key={size.name}
                     onClick={() => setSelectedSize(size.name)}
-                    className={`px-3 py-1 border rounded-md ${
+                    className={`px-6 py-4 cursor-pointer text-md lg:text-lg border rounded-md justify-center items-center flex flex-col ${
                       selectedSize === size.name
                         ? "bg-blue-500 text-white"
-                        : "bg-white text-black"
+                        : "bg-slate-200 text-black"
                     }`}
                   >
-                    {size.name}
-                  </Button>
+                    <span className="uppercase">{size.name}</span>
+                    <span className="text-xs">{size.dimensions}</span>
+                  </div>
                 ))}
               </div>
             </div>

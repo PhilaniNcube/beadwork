@@ -62,7 +62,7 @@ const DesktopPublicHeader = ({ user, categories }: { user: User | null, categori
                 <Link
                   key={category.id}
                   href={`/categories/${category.slug}`}
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent md:text-lg hover:border-primary hover:text-primary"
+                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 border-b-2 border-transparent md:text-md hover:border-primary hover:text-primary"
                 >
                   {category.name}
                 </Link>
