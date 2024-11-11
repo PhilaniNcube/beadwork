@@ -12,16 +12,54 @@ const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
 	: "http://localhost:3000";
 
-export const metadata :Metadata = {
-	metadataBase: new URL(defaultUrl),
-	title: "Glambeads",
-	description:
-		"Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
-  generator : "Next.js",
-  verification : {
-    google : "hgCDy2IUmS0xFdUuXniziUzwvt0Ump4hBCDjw8Ed2MQ",
+export const metadata: Metadata = {
+  metadataBase: new URL(defaultUrl),
 
-  }
+  title: "Glambeads",
+  description:
+    "Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
+  generator: "Next.js",
+  verification: {
+    google: "hgCDy2IUmS0xFdUuXniziUzwvt0Ump4hBCDjw8Ed2MQ",
+  },
+  referrer: "origin",
+  robots: "index, follow",
+  keywords: "jewellery, handmade, accessories, fashion, style",
+  category: "Fashion",
+  openGraph: {
+
+    type: "website",
+    locale: "en_GB",
+    url: defaultUrl,
+    siteName: "Glambeads",
+    title: "Glambeads",
+    description:
+      "Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
+    images: [
+      {
+        url: "https://uijjfslwyuylxchlehlc.supabase.co/storage/v1/object/public/images/glambeads-new-logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Glambeads",
+      },
+    ],
+  },
+
+  twitter: {
+   card: "summary_large_image",
+    site: "@site",
+    title: "Glambeads",
+    description:
+      "Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
+      images : "https://uijjfslwyuylxchlehlc.supabase.co/storage/v1/object/public/images/glambeads-new-logo.jpg"
+  },
+  icons: [
+    {
+      url: "https://uijjfslwyuylxchlehlc.supabase.co/storage/v1/object/public/images/glambeads-new-logo.jpg",
+      type: "image/jpg",
+      sizes: "16x16",
+    },
+  ],
 };
 
 export default async function RootLayout({
