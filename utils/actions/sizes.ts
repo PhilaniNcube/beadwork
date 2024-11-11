@@ -47,10 +47,12 @@ export async function addSize(prevState: unknown, formData:FormData) {
 }
 
 
-export async function deleteSizeAction(size_id: number) {
+export async function deleteSizeAction(formData: FormData) {
   const supabase = createClient();
 
-  const { error } = await supabase.from("sizes").delete().eq("id", size_id);
+  const size_id = formData.get("sizeId") as string;
+
+  const { error } = await supabase.from("sizes").delete().eq("id", Number(size_id));
 
   if (error) {
     return {

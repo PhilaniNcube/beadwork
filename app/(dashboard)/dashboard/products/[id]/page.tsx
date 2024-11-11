@@ -120,12 +120,14 @@ const DashboardProducts = async (
                   {sizes.map((size, index) => (
                     <li
                       key={index}
-                      className="p-3 border rounded bg-zinc-100 w-fit border-slate-600 relative"
+                      className="p-6 border rounded bg-zinc-100 w-fit border-slate-600 relative"
                     >
-                      <form action={() => deleteSizeAction(size.id)}>
+                      <form action={deleteSizeAction}>
+                        <input type="hidden" name="sizeId" value={size.id} />
                         <Button
                           type="submit"
                           size="sm"
+                          variant="ghost"
                           className="absolute top-1 right-1 text-xs text-red-600"
                         >
                           <Trash size={12} />
