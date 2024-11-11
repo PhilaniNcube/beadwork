@@ -175,3 +175,5 @@ export async function deleteProductAction(productId:number) {
   return { status: 200, message: "Product deleted successfully" };
 
 }
+
+

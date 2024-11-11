@@ -61,3 +61,18 @@ export async function getChildCategories() {
 
   return { data, status: 200 };
 }
+
+
+export const getCategorySlugs = async () => {
+
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("categories").select("slug");
+
+  if (error) {
+    return [];
+  }
+
+  return data;
+
+}

@@ -231,6 +231,20 @@ export async function getProductSizes(productId: number) {
   return sizes;
 }
 
+export async function getProductSlugs() {
+
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("products").select("slug");
+
+  if (error) {
+    return [];
+  }
+
+  return data;
+
+}
+
 
 export type CategoryProductType = {
   id: number | undefined;
