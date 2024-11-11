@@ -5,17 +5,23 @@ import { getCart } from "@/stores/cart-store";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
+import { Metadata } from "next";
 
 
 const defaultUrl = process.env.VERCEL_URL
 	? `https://${process.env.VERCEL_URL}`
 	: "http://localhost:3000";
 
-export const metadata = {
+export const metadata :Metadata = {
 	metadataBase: new URL(defaultUrl),
 	title: "Glambeads",
 	description:
 		"Elevate your style with our exquisite handmade jewellery, crafted with the finest attention to detail.",
+  generator : "Next.js",
+  verification : {
+    google : "hgCDy2IUmS0xFdUuXniziUzwvt0Ump4hBCDjw8Ed2MQ",
+
+  }
 };
 
 export default async function RootLayout({
