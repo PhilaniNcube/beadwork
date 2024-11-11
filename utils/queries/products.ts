@@ -245,6 +245,20 @@ export async function getProductSlugs() {
 
 }
 
+export const getProductSlug = async (slug: string) => {
+
+  const supabase = createClient();
+
+  const { data, error } = await supabase.from("products").select("slug").eq("slug", slug).single();
+
+  if (error) {
+    return null;
+  }
+
+  return data;
+
+}
+
 
 export type CategoryProductType = {
   id: number | undefined;
