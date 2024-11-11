@@ -15,6 +15,9 @@ import ProductImageUploader from "@/components/product-image-uploader";
 import DeleteProductImage from "./_components/delete-product-image";
 import SizeOptionForm from "./_components/size-option-form";
 import { getProductSizes } from "@/utils/queries/sizes";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
+import { deleteSizeAction } from "@/utils/actions/sizes";
 
 interface Size {
   name: string;
@@ -115,7 +118,19 @@ const DashboardProducts = async (
                 <h3 className="font-semibold text-md">Current Sizes:</h3>
                 <ul className="flex flex-row flex-wrap gap-3">
                   {sizes.map((size, index) => (
-                    <li key={index} className="p-3 border rounded bg-zinc-100 w-fit border-slate-600">
+                    <li
+                      key={index}
+                      className="p-3 border rounded bg-zinc-100 w-fit border-slate-600 relative"
+                    >
+                      <form action={() => deleteSizeAction(size.id)}>
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="absolute top-1 right-1 text-xs text-red-600"
+                        >
+                          <Trash size={12} />
+                        </Button>
+                      </form>
                       <p className="font-medium text-md">{size.name}</p>{" "}
                       <p className="text-xs text-muted-foreground">
                         ({size.dimensions})

@@ -1,4 +1,5 @@
 "use server";
+import "server-only"
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "../supabase/server";
@@ -42,5 +43,26 @@ export async function addSize(prevState: unknown, formData:FormData) {
   return {
     status: "success",
     message: "Size added successfully",
+  }
+}
+
+
+export async function deleteSizeAction(size_id: number) {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("sizes").delete().eq("id", size_id);
+
+  if (error) {
+    return {
+      status: "error",
+      message: error.message,
+    }
+  }
+
+    revalidatePath(`/dashboard/products`, "layout");
+
+  return {
+    status: "success",
+    message: "Size deleted successfully",
   }
 }
