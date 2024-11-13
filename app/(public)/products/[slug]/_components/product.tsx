@@ -16,7 +16,7 @@ const Product = async ({ slug }:{slug:string}) => {
         "@context": "https://schema.org/",
         "@type": "Product",
         name: product.title,
-        image: product.product_images[0],
+        image: product.product_images[0].image_url,
         description: product.description,
         sku: product.id,
         offers: {
