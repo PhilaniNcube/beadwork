@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { ImageResponse } from "next/og";
 
+// Force edge runtime to avoid URL resolution issues during build
+export const runtime = 'edge';
+
 // Image metadata
 export const size = {
   width: 32,
